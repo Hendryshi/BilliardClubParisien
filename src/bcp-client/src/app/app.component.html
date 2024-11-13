@@ -22,11 +22,11 @@
     <mat-sidenav
       #sidenav
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="true"
+      [opened]="!(isHandset$ | async)"
       [fixedInViewport]="true"
       fixedTopGap="64">
       <mat-nav-list>
-        <a mat-list-item routerLink="/inscription">
+        <a mat-list-item routerLink="/inscription" (click)="sidenav.close()">
           <mat-icon>how_to_reg</mat-icon>
           <span class="nav-label">Demande Inscription</span>
         </a>

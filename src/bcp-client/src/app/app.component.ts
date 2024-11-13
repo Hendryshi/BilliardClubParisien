@@ -33,4 +33,8 @@ export class AppComponent {
       map(result => result.matches),
       shareReplay()
     );
+
+  sidenavOpened$: Observable<boolean> = this.isHandset$.pipe(
+    map(isHandset => !isHandset)
+  );
 }
