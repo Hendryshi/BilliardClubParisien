@@ -1,0 +1,78 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.sidenav-container {
+  flex: 1;
+  margin-top: 64px; /* toolbar height */
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+.nav-label {
+  margin-left: 8px;
+}
+
+.content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 599px) {
+  .sidenav-container {
+    margin-top: 56px; /* mobile toolbar height */
+  }
+
+  mat-sidenav {
+    width: 100%; /* 在移动端全宽显示 */
+  }
+
+  .login-button span {
+    display: none; /* 在移动端只显示图标 */
+  }
+}
