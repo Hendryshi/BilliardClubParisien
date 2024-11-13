@@ -1,27 +1,30 @@
-# BcpClient
+# 台球俱乐部会员管理系统 (Club de Billard - Système de Gestion des Membres)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+## 项目简介
+这是一个基于 Angular 开发的台球俱乐部会员管理系统，专门面向法国的台球俱乐部。系统提供会员在线申请和管理员审核功能，支持移动端和桌面端自适应访问。
 
-## Development server
+## 主要功能
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 会员端功能
+- 在线注册账号
 
-## Code scaffolding
+### 管理员功能
+- 管理员控制面板
+- 会员申请审核
+- 新会员验证
+- 现有会员管理
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 技术规格
+- 框架：Angular 17+
+- UI组件：Angular Material
+- 响应式设计：支持移动端和桌面端
+- 本地化：法语界面
+- 身份认证：JWT
+- 支付集成：Stripe
 
-## Build
+## 开发环境要求
+- Node.js (v18+)
+- npm (v9+)
+- Angular CLI (v17+)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 项目结构
