@@ -1,0 +1,336 @@
+.inscription-container {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.inscription-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, #1a237e, #3949ab);
+  color: white;
+  padding: 24px;
+  margin: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+mat-card-title {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  color: white;
+  margin-bottom: 8px !important;
+}
+
+mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 16px !important;
+}
+
+.inscription-form {
+  padding: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.radio-label {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+}
+
+mat-radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+button[type="submit"] {
+  padding: 8px 32px;
+  font-size: 16px;
+  border-radius: 25px;
+}
+
+@media (max-width: 599px) {
+  .inscription-container {
+    padding: 16px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  mat-card-title {
+    font-size: 20px !important;
+  }
+
+  mat-card-subtitle {
+    font-size: 14px !important;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inscription-form {
+    padding: 16px;
+  }
+}
+
+.form-section {
+  margin: 24px 0;
+}
+
+.form-section h3 {
+  color: #1a237e;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e8eaf6;
+}
+
+.competition-group {
+  display: flex;
+  gap: 24px;
+  margin: 8px 0;
+}
+
+.categories-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.category-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+mat-checkbox {
+  margin-bottom: 0;
+}
+
+mat-radio-button {
+  margin-right: 16px;
+}
+
+mat-error {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #f44336;
+}
+
+@media (max-width: 599px) {
+  .categories-group {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .category-item {
+    padding: 10px 12px;
+  }
+}
+
+.motivation-field {
+  width: 100%;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+mat-hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* 当剩余字符少于100时改变提示颜色 */
+mat-hint.warning {
+  color: #ff9800;
+}
+
+/* 当剩余字符少于50时改变提示颜色 */
+mat-hint.danger {
+  color: #f44336;
+}
+
+.motivation-description {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3f51b5;
+}
+
+.motivation-description p {
+  margin: 0 0 12px 0;
+  color: #424242;
+  font-size: 14px;
+}
+
+.motivation-description ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #424242;
+  font-size: 14px;
+}
+
+.motivation-description li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.motivation-description li:last-child {
+  margin-bottom: 0;
+}
+
+.subscription-info {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3f51b5;
+}
+
+.tarifs-table {
+  margin-bottom: 24px;
+}
+
+.tarifs-table h4 {
+  color: #1a237e;
+  font-size: 16px;
+  margin: 0 0 16px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 500;
+}
+
+td:first-child {
+  font-weight: 500;
+  background-color: #f5f5f5;
+}
+
+.formules-description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formule-item {
+  padding: 16px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.formule-item h5 {
+  color: #1a237e;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.formule-item p {
+  margin: 0;
+  color: #424242;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.formule-item .note {
+  margin-top: 8px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 599px) {
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .formule-item {
+    padding: 12px;
+  }
+}
+
+.info-button {
+  margin-bottom: 16px;
+  color: #3f51b5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-button mat-icon {
+  transition: transform 0.3s ease;
+}
+
+.subscription-info {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3f51b5;
+} 

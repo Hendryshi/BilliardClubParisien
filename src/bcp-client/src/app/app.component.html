@@ -7,7 +7,7 @@
         (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class="logo">Billiard Club Parisien</span>
+      <span class="logo" routerLink="/home" style="cursor: pointer">Billiard Club Parisien</span>
     </div>
     
     <div class="toolbar-right">
@@ -26,7 +26,7 @@
       [fixedInViewport]="true"
       fixedTopGap="64">
       <mat-nav-list>
-        <a mat-list-item routerLink="/inscription" (click)="sidenav.close()">
+        <a mat-list-item routerLink="/inscription" (click)="handleMenuClick(sidenav)">
           <mat-icon>how_to_reg</mat-icon>
           <span class="nav-label">Demande Inscription</span>
         </a>

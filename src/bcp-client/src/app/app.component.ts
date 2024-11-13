@@ -34,7 +34,9 @@ export class AppComponent {
       shareReplay()
     );
 
-  sidenavOpened$: Observable<boolean> = this.isHandset$.pipe(
-    map(isHandset => !isHandset)
-  );
+  handleMenuClick(sidenav: any): void {
+    if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
+      sidenav.close();
+    }
+  }
 }
