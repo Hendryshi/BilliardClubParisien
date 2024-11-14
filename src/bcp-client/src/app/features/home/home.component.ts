@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
     MatCardModule, 
     MatButtonModule, 
     MatIconModule,
-    RouterModule
+    RouterModule,
+    BreadcrumbComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']

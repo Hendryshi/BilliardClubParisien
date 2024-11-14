@@ -15,5 +15,10 @@ export const routes: Routes = [
     path: 'inscription',
     loadComponent: () => import('./features/inscription/inscription.component')
       .then(m => m.InscriptionComponent)
+  },
+  {
+    path: 'admin/applications',
+    loadComponent: () => import('./features/admin/applications/applications.component')
+      .then(m => m.ApplicationsComponent)
   }
 ];

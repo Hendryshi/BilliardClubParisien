@@ -1,4 +1,15 @@
 <div class="inscription-container">
+  <app-breadcrumb [items]="[
+    { label: 'Accueil', link: '/home' },
+    { label: 'Demande Inscription' }
+  ]"></app-breadcrumb>
+
+  <app-page-header
+    title="Formulaire d'Inscription"
+    subtitle="Remplissez le formulaire pour rejoindre notre club"
+    icon="how_to_reg">
+  </app-page-header>
+
   <mat-card class="inscription-card">
     <mat-card-header>
       <mat-card-title>PRISE DE LICENCE - SAISON 2024-2025</mat-card-title>

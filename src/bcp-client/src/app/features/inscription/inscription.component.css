@@ -1,13 +1,30 @@
 .inscription-container {
   padding: 24px;
-  max-width: 800px;
+  width: 90%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .inscription-card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 响应式布局调整 */
+@media screen and (min-width: 1920px) {
+  .inscription-container {
+    padding: 32px;
+  }
+
+  .inscription-card {
+    max-width: 1400px;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .inscription-container {
+    padding: 20px;
+  }
 }
 
 mat-card-header {

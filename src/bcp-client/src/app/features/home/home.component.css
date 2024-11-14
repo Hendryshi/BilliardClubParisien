@@ -1,6 +1,6 @@
 .home-container {
   padding: 24px;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -46,7 +46,6 @@ mat-card-subtitle {
 
 .features-section {
   padding: 0 24px;
-  margin-bottom: 32px;
 }
 
 .features-section h3 {
@@ -123,8 +122,21 @@ mat-card-actions button {
   .feature-text span {
     font-size: 14px;
   }
+} 
 
-  .features-section {
-    margin-bottom: 24px;
+/* 响应式布局调整 */
+@media screen and (min-width: 1920px) {
+  .home-container {
+    padding: 32px;
+  }
+
+  .welcome-card {
+    max-width: 1400px;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .home-container {
+    padding: 20px;
   }
 } 
