@@ -19,12 +19,9 @@ interface Application {
   id: number;
   nom: string;
   prenom: string;
-  email: string;
-  telephone: string;
   formule: string;
-  dateInscription: Date;
   status: 'En attente' | 'Approuvé' | 'Refusé';
-  sexe: 'M' | 'F';
+  previousMember: 'Oui' | 'Non';
 }
 
 @Component({
@@ -51,7 +48,7 @@ interface Application {
   styleUrls: ['./applications.component.css']
 })
 export class ApplicationsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nom', 'prenom', 'email', 'telephone', 'formule', 'dateInscription', 'status', 'actions'];
+  displayedColumns: string[] = ['nom', 'prenom', 'formule', 'previousMember', 'status', 'actions'];
   dataSource: MatTableDataSource<Application>;
   
   @ViewChild(MatSort) sort!: MatSort;
@@ -62,78 +59,57 @@ export class ApplicationsComponent implements AfterViewInit {
       id: 1,
       nom: 'Dupont',
       prenom: 'Jean',
-      email: 'jean.dupont@email.com',
-      telephone: '0612345678',
       formule: 'Silver',
-      dateInscription: new Date('2024-01-15'),
       status: 'En attente',
-      sexe: 'M'
+      previousMember: 'Oui'
     },
     {
       id: 2,
       nom: 'Martin',
       prenom: 'Marie',
-      email: 'marie.martin@email.com',
-      telephone: '0687654321',
       formule: 'Gold',
-      dateInscription: new Date('2024-01-16'),
       status: 'Approuvé',
-      sexe: 'F'
+      previousMember: 'Non'
     },
     {
       id: 3,
       nom: 'Bernard',
       prenom: 'Sophie',
-      email: 'sophie.bernard@email.com',
-      telephone: '0623456789',
       formule: 'Gold',
-      dateInscription: new Date('2024-01-17'),
       status: 'Refusé',
-      sexe: 'F'
+      previousMember: 'Non'
     },
     {
       id: 4,
       nom: 'Petit',
       prenom: 'Thomas',
-      email: 'thomas.petit@email.com',
-      telephone: '0634567890',
       formule: 'Silver',
-      dateInscription: new Date('2024-01-18'),
       status: 'Approuvé',
-      sexe: 'M'
+      previousMember: 'Oui'
     },
     {
       id: 5,
       nom: 'Dubois',
       prenom: 'Claire',
-      email: 'claire.dubois@email.com',
-      telephone: '0645678901',
       formule: 'Gold',
-      dateInscription: new Date('2024-01-19'),
       status: 'En attente',
-      sexe: 'F'
+      previousMember: 'Non'
     },
     {
       id: 6,
       nom: 'Moreau',
       prenom: 'Lucas',
-      email: 'lucas.moreau@email.com',
-      telephone: '0656789012',
       formule: 'Silver',
-      dateInscription: new Date('2024-01-20'),
       status: 'Refusé',
-      sexe: 'M'
+      previousMember: 'Oui'
     },
     {
       id: 7,
       nom: 'Roux',
       prenom: 'Emma',
-      email: 'emma.roux@email.com',
-      telephone: '0667890123',
       formule: 'Gold',
-      dateInscription: new Date('2024-01-21'),
       status: 'Approuvé',
-      sexe: 'F'
+      previousMember: 'Non'
     }
   ];
 
@@ -152,8 +128,6 @@ export class ApplicationsComponent implements AfterViewInit {
     
     this.dataSource.sortingDataAccessor = (item: Application, property: string): string | number => {
       switch(property) {
-        case 'dateInscription': 
-          return new Date(item.dateInscription).getTime();
         case 'status':
           const statusOrder = {
             'En attente': 0,
