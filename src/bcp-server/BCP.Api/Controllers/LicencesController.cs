@@ -1,18 +1,16 @@
 using BCP.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BCP.Api.Controllers
 {
 	[ApiController]
-	[Route("BCP/Licences/")]
-	public class LicencesController : ControllerBase
+	[Route("api/[Controller]")]
+	public class LicenceController : BaseApiController
 	{
-		private readonly ILogger<LicencesController> _logger;
+		public LicenceController(IMediator mediator, ILogger<BaseApiController> logger, IWebHostEnvironment env)
+				: base(mediator, logger, env) { }
 
-		public LicencesController(ILogger<LicencesController> logger)
-		{
-			_logger = logger;
-		}
 
 		[HttpGet("AllForms")]
 		public ActionResult<List<LicenceForm>> GetAllForms()
