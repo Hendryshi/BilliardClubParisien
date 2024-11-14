@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
@@ -29,6 +30,7 @@ interface Application {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     MatTableModule,
     MatPaginatorModule,

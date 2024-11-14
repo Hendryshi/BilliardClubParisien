@@ -1,13 +1,53 @@
 .inscription-container {
-  padding: 24px;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   width: 90%;
   margin: 0 auto;
-  box-sizing: border-box;
+  height: calc(100vh - 64px);
+}
+
+.header-section {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding-bottom: 24px;
+  background: none;
+}
+
+.content-section {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 32px;
+}
+
+/* 自定义滚动条样式 */
+.content-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content-section::-webkit-scrollbar-thumb {
+  background: #E0E0E0;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.content-section::-webkit-scrollbar-thumb:hover {
+  background: #BDBDBD;
 }
 
 .inscription-card {
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 32px;
 }
 
 /* 响应式布局调整 */
@@ -92,7 +132,12 @@ button[type="submit"] {
 
 @media (max-width: 599px) {
   .inscription-container {
-    padding: 16px;
+    padding: 16px 16px;
+    width: 100%;
+  }
+
+  .header-section {
+    padding-bottom: 16px;
   }
 
   .form-row {
@@ -115,6 +160,23 @@ button[type="submit"] {
 
   .inscription-form {
     padding: 16px;
+  }
+
+  .inscription-card {
+    margin-bottom: 24px;
+  }
+
+  .content-section {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .content-section::-webkit-scrollbar {
+    display: none;
+  }
+
+  .inscription-card {
+    width: 100%;
   }
 }
 

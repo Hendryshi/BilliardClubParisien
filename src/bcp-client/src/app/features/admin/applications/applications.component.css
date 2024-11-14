@@ -1,11 +1,44 @@
 .applications-container {
   padding: 24px 32px;
-  height: 100%;
-  width: 90%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  width: 90%;
   margin: 0 auto;
+  height: calc(100vh - 64px);
+}
+
+.header-section {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding-bottom: 24px;
+  background: none;
+}
+
+.content-section {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 32px;
+}
+
+/* 自定义滚动条样式 */
+.content-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content-section::-webkit-scrollbar-thumb {
+  background: #E0E0E0;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.content-section::-webkit-scrollbar-thumb:hover {
+  background: #BDBDBD;
 }
 
 .filters-section {
@@ -147,7 +180,12 @@ mat-form-field {
 
 @media screen and (max-width: 599px) {
   .applications-container {
-    padding: 16px;
+    padding: 16px 16px;
+    width: 100%;
+  }
+
+  .header-section {
+    padding-bottom: 16px;
   }
 
   .filters-section {
@@ -174,5 +212,18 @@ mat-form-field {
     font-size: 18px;
     height: 18px;
     width: 18px;
+  }
+
+  mat-card {
+    margin-bottom: 24px;
+  }
+
+  .content-section {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .content-section::-webkit-scrollbar {
+    display: none;
   }
 } 

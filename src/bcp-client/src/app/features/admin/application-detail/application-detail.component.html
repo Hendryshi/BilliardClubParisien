@@ -1,0 +1,143 @@
+<div class="detail-container">
+  <div class="header-section">
+    <app-breadcrumb [items]="[
+      { label: 'Accueil', link: '/home' },
+      { label: 'Admin', link: '/admin' },
+      { label: 'Gestion des Demandes', link: '/admin/applications' },
+      { label: 'Détail de la demande' }
+    ]"></app-breadcrumb>
+
+    <app-page-header
+      title="Détail de la Demande d'Inscription"
+      [subtitle]="'Demande de ' + application.prenom + ' ' + application.nom"
+      icon="person">
+    </app-page-header>
+  </div>
+
+  <div class="content-section">
+    <mat-card class="detail-card">
+      <mat-card-content>
+        <div class="detail-section status-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">info</mat-icon>
+            <h3>Statut de la Demande</h3>
+          </div>
+          <span [class]="'status-badge ' + getStatusClass(application.status)">
+            {{application.status}}
+          </span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">person</mat-icon>
+            <h3>Informations Personnelles</h3>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">Nom</span>
+              <span class="value">{{application.nom}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Prénom</span>
+              <span class="value">{{application.prenom}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Email</span>
+              <span class="value">{{application.email}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Téléphone</span>
+              <span class="value">{{application.telephone}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Sexe</span>
+              <span class="value">{{application.sexe === 'M' ? 'Masculin' : 'Féminin'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">card_membership</mat-icon>
+            <h3>Informations d'Adhésion</h3>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">Membre en 2023-2024</span>
+              <span class="value">{{application.previousMember}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Formule</span>
+              <span class="value">{{application.formule}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Participation aux compétitions</span>
+              <span class="value">{{application.competition}}</span>
+            </div>
+          </div>
+
+          <div *ngIf="application.competition === 'Oui'" class="categories-section">
+            <h4>Catégories sélectionnées</h4>
+            <div class="categories-list">
+              <mat-chip-set>
+                <mat-chip *ngIf="application.categories?.junior">
+                  Catégorie Junior (-23 ans et moins)
+                </mat-chip>
+                <mat-chip *ngIf="application.categories?.mixte">
+                  Catégorie Mixte
+                </mat-chip>
+                <mat-chip *ngIf="application.categories?.feminine">
+                  Catégorie Féminine
+                </mat-chip>
+                <mat-chip *ngIf="application.categories?.regional">
+                  Niveau Régional
+                </mat-chip>
+                <mat-chip *ngIf="application.categories?.national">
+                  Niveau National
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section" *ngIf="application.motivation">
+          <div class="section-header">
+            <mat-icon class="section-icon">description</mat-icon>
+            <h3>Motivations et Objectifs</h3>
+          </div>
+          <div class="motivation-container">
+            <p class="motivation-text">{{application.motivation}}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="card-actions" *ngIf="application.status === 'En attente'">
+    <div class="card-actions-container">
+      <div class="action-group">
+        <button mat-flat-button 
+                color="primary"
+                class="approve-button"
+                (click)="approveApplication()">
+          <mat-icon>check_circle</mat-icon>
+          <span class="button-text">Approuver</span>
+        </button>
+
+        <button mat-flat-button 
+                color="warn"
+                class="reject-button"
+                (click)="rejectApplication()">
+          <mat-icon>cancel</mat-icon>
+          <span class="button-text">Refuser</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 
