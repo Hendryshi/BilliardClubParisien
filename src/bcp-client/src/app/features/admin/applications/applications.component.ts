@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
@@ -8,9 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterModule } from '@angular/router';
-import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 interface Application {
   id: number;
@@ -21,6 +24,7 @@ interface Application {
   formule: string;
   dateInscription: Date;
   status: 'En attente' | 'Approuvé' | 'Refusé';
+  sexe: 'M' | 'F';
 }
 
 @Component({
@@ -28,7 +32,7 @@ interface Application {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    FormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -37,13 +41,16 @@ interface Application {
     MatButtonModule,
     MatChipsModule,
     MatTooltipModule,
-    BreadcrumbComponent,
-    PageHeaderComponent
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    PageHeaderComponent,
+    BreadcrumbComponent
   ],
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.css']
 })
-export class ApplicationsComponent {
+export class ApplicationsComponent implements AfterViewInit {
   displayedColumns: string[] = ['nom', 'prenom', 'email', 'telephone', 'formule', 'dateInscription', 'status', 'actions'];
   dataSource: MatTableDataSource<Application>;
   
@@ -59,7 +66,8 @@ export class ApplicationsComponent {
       telephone: '0612345678',
       formule: 'Silver',
       dateInscription: new Date('2024-01-15'),
-      status: 'En attente'
+      status: 'En attente',
+      sexe: 'M'
     },
     {
       id: 2,
@@ -69,7 +77,8 @@ export class ApplicationsComponent {
       telephone: '0687654321',
       formule: 'Gold',
       dateInscription: new Date('2024-01-16'),
-      status: 'Approuvé'
+      status: 'Approuvé',
+      sexe: 'F'
     },
     {
       id: 3,
@@ -79,7 +88,8 @@ export class ApplicationsComponent {
       telephone: '0623456789',
       formule: 'Gold',
       dateInscription: new Date('2024-01-17'),
-      status: 'Refusé'
+      status: 'Refusé',
+      sexe: 'F'
     },
     {
       id: 4,
@@ -89,7 +99,8 @@ export class ApplicationsComponent {
       telephone: '0634567890',
       formule: 'Silver',
       dateInscription: new Date('2024-01-18'),
-      status: 'Approuvé'
+      status: 'Approuvé',
+      sexe: 'M'
     },
     {
       id: 5,
@@ -99,7 +110,8 @@ export class ApplicationsComponent {
       telephone: '0645678901',
       formule: 'Gold',
       dateInscription: new Date('2024-01-19'),
-      status: 'En attente'
+      status: 'En attente',
+      sexe: 'F'
     },
     {
       id: 6,
@@ -109,7 +121,8 @@ export class ApplicationsComponent {
       telephone: '0656789012',
       formule: 'Silver',
       dateInscription: new Date('2024-01-20'),
-      status: 'Refusé'
+      status: 'Refusé',
+      sexe: 'M'
     },
     {
       id: 7,
@@ -119,34 +132,47 @@ export class ApplicationsComponent {
       telephone: '0667890123',
       formule: 'Gold',
       dateInscription: new Date('2024-01-21'),
-      status: 'Approuvé'
+      status: 'Approuvé',
+      sexe: 'F'
     }
   ];
 
+  statusFilter: string = '';
+  genderFilter: string = '';
+  searchText: string = '';
+
   constructor() {
     this.dataSource = new MatTableDataSource(this.applications);
+    this.dataSource.filterPredicate = this.createFilter();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     
-    setTimeout(() => {
-      this.sort.sort({
-        id: 'dateInscription',
-        start: 'desc',
-        disableClear: true
-      });
-    });
-
     this.dataSource.sortingDataAccessor = (item: Application, property: string): string | number => {
       switch(property) {
         case 'dateInscription': 
           return new Date(item.dateInscription).getTime();
+        case 'status':
+          const statusOrder = {
+            'En attente': 0,
+            'Approuvé': 1,
+            'Refusé': 2
+          };
+          return statusOrder[item.status as keyof typeof statusOrder];
         default: 
           return item[property as keyof Application]?.toString() || '';
       }
     };
+
+    setTimeout(() => {
+      this.sort.sort({
+        id: 'status',
+        start: 'asc',
+        disableClear: true
+      });
+    });
   }
 
   getStatusClass(status: string): string {
@@ -173,5 +199,40 @@ export class ApplicationsComponent {
       default:
         return '';
     }
+  }
+
+  applyFilter() {
+    const filterValue = {
+      search: this.searchText.trim().toLowerCase(),
+      status: this.statusFilter,
+      gender: this.genderFilter
+    };
+    this.dataSource.filter = JSON.stringify(filterValue);
+  }
+
+  private createFilter(): (data: any, filter: string) => boolean {
+    return (data: any, filter: string): boolean => {
+      const filterObj = JSON.parse(filter);
+      
+      const searchMatch = !filterObj.search || 
+        Object.keys(data).some(key => {
+          if (typeof data[key] === 'string') {
+            return data[key].toLowerCase().includes(filterObj.search);
+          }
+          return false;
+        });
+
+      const statusMatch = !filterObj.status || data.status === filterObj.status;
+      const genderMatch = !filterObj.gender || data.sexe === filterObj.gender;
+
+      return searchMatch && statusMatch && genderMatch;
+    };
+  }
+
+  clearFilters() {
+    this.searchText = '';
+    this.statusFilter = '';
+    this.genderFilter = '';
+    this.applyFilter();
   }
 } 

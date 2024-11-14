@@ -223,4 +223,61 @@ mat-card-content {
   .page-subtitle {
     font-size: 12px;
   }
+}
+
+.filters-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: nowrap;
+}
+
+mat-form-field {
+  width: 200px;
+}
+
+.clear-filters-btn {
+  margin-top: -8px;
+  margin-bottom: 16px;
+  height: 48px;
+  padding: 0 24px;
+  white-space: nowrap;
+  margin-left: auto;
+  font-size: 15px;
+}
+
+.clear-filters-btn mat-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
+}
+
+@media screen and (max-width: 1024px) {
+  .filters-section {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  mat-form-field {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .filters-section {
+    flex-direction: column;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .clear-filters-btn {
+    width: 100%;
+    margin-top: 0;
+    margin-left: 0;
+  }
 } 

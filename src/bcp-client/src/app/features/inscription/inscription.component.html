@@ -5,17 +5,12 @@
   ]"></app-breadcrumb>
 
   <app-page-header
-    title="Formulaire d'Inscription"
-    subtitle="Remplissez le formulaire pour rejoindre notre club"
+    title="PRISE DE LICENCE - SAISON 2024-2025"
+    subtitle="FORMULAIRE DE CANDIDATURE"
     icon="how_to_reg">
   </app-page-header>
 
   <mat-card class="inscription-card">
-    <mat-card-header>
-      <mat-card-title>PRISE DE LICENCE - SAISON 2024-2025</mat-card-title>
-      <mat-card-subtitle>FORMULAIRE DE CANDIDATURE</mat-card-subtitle>
-    </mat-card-header>
-
     <mat-card-content>
       <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="inscription-form">
         <div class="form-section">
@@ -69,6 +64,17 @@
                 Veuillez entrer une adresse email valide
               </mat-error>
             </mat-form-field>
+        </div>
+
+        <div class="form-section">
+          <h3>Etiez-vous licencié(e) au Billard Club Parisien lors de la saison 2023-2024 ?</h3>
+          <mat-radio-group formControlName="previousMember" class="competition-group">
+            <mat-radio-button value="oui">Oui</mat-radio-button>
+            <mat-radio-button value="non">Non</mat-radio-button>
+          </mat-radio-group>
+          <mat-error *ngIf="inscriptionForm.get('previousMember')?.hasError('required') && inscriptionForm.get('previousMember')?.touched">
+            Veuillez faire un choix
+          </mat-error>
         </div>
 
         <div class="form-section">

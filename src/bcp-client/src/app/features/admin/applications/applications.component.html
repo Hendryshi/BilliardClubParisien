@@ -13,6 +13,45 @@
 
   <mat-card>
     <mat-card-content>
+      <div class="filters-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput [(ngModel)]="searchText" (keyup)="applyFilter()" placeholder="Nom, email...">
+          <button mat-icon-button matSuffix *ngIf="searchText" (click)="searchText=''; applyFilter()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Statut</mat-label>
+          <mat-select [(ngModel)]="statusFilter" (selectionChange)="applyFilter()">
+            <mat-option value="">Tous</mat-option>
+            <mat-option value="En attente">En attente</mat-option>
+            <mat-option value="Approuvé">Approuvé</mat-option>
+            <mat-option value="Refusé">Refusé</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sexe</mat-label>
+          <mat-select [(ngModel)]="genderFilter" (selectionChange)="applyFilter()">
+            <mat-option value="">Tous</mat-option>
+            <mat-option value="M">Masculin</mat-option>
+            <mat-option value="F">Féminin</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button 
+                color="primary" 
+                class="clear-filters-btn"
+                [disabled]="!searchText && !statusFilter && !genderFilter"
+                (click)="clearFilters()">
+          <mat-icon>clear_all</mat-icon>
+          Réinitialiser
+        </button>
+      </div>
+
       <div class="table-container">
         <div class="table-scroll-container">
           <table mat-table [dataSource]="dataSource" matSort matSortDisableClear class="applications-table">
@@ -83,10 +122,11 @@
           </table>
         </div>
 
-        <mat-paginator [pageSizeOptions]="[1, 5, 10, 20]"
-                      [pageSize]="10"
-                      showFirstLastButtons
-                      aria-label="Sélectionner la page">
+        <mat-paginator 
+          [pageSizeOptions]="[5, 10, 20]"
+          [pageSize]="5"
+          showFirstLastButtons
+          aria-label="Sélectionner la page">
         </mat-paginator>
       </div>
     </mat-card-content>

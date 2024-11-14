@@ -99,6 +99,7 @@ export class InscriptionComponent {
       sexe: ['', Validators.required],
       telephone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
+      previousMember: ['', Validators.required],
       formule: ['', Validators.required],
       competition: ['', Validators.required],
       categories: this.fb.group({
