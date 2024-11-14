@@ -34,7 +34,7 @@
 .content-section::-webkit-scrollbar-thumb {
   background: #E0E0E0;
   border-radius: 3px;
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 .content-section::-webkit-scrollbar-thumb:hover {
