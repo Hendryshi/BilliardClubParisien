@@ -2,6 +2,8 @@ using MediatR;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Core.Common.Application.Behaviours;
+using FluentValidation;
 
 namespace BCP.Application
 {
@@ -21,6 +23,15 @@ namespace BCP.Application
 			}, new[]
 			{
 				typeof(Entity.Mapping.MappingProfile).Assembly
+			});
+			services.AddValidatorsFromAssembly(typeof(BCP.Application.Entity.Mapping.MappingProfile).Assembly);
+
+			services.AddMediatR(cfg =>
+			{
+				cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+				cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+				cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
 			});
 
 			return services;

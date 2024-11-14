@@ -10,7 +10,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NSwag.AspNetCore" Version="14.1.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="ZymLabs.NSwag.FluentValidation.AspNetCore" Version="0.7.1" />
   </ItemGroup>
 
   <ItemGroup>

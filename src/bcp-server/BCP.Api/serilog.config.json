@@ -34,7 +34,7 @@
             "WithThreadId"
         ],
         "Properties": {
-            "Application": "Core.Common.TemplateTool.Api",
+            "Application": "BilliardClubParisien.Api",
             "Environment": "Development"
         }
     }

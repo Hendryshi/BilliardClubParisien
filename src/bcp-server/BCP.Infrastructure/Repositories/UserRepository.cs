@@ -17,7 +17,7 @@ namespace BCP.Infrastructure.Repositories
 			_dbContext = dbContext;
 		}
 
-		#region BaseTemplate CRUD
+		#region User CRUD
 		public async Task<Result<User>> AddAsync(User oobject)
 		{
 			try
