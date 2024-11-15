@@ -7,11 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A47594D0-578
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCP.Api", "src\bcp-server\BCP.Api\BCP.Api.csproj", "{35A150F4-AF8E-424D-AD0E-E987ED4FE272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCP.Domain", "src\bcp-server\BCP.Domain\BCP.Domain.csproj", "{49E957A9-3FAD-469D-A8F1-046821B22788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCP.Domain", "src\bcp-server\BCP.Domain\BCP.Domain.csproj", "{49E957A9-3FAD-469D-A8F1-046821B22788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCP.Infrastructure", "src\bcp-server\BCP.Infrastructure\BCP.Infrastructure.csproj", "{BA4AA486-1600-446B-BAA0-458AACEB09F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCP.Infrastructure", "src\bcp-server\BCP.Infrastructure\BCP.Infrastructure.csproj", "{BA4AA486-1600-446B-BAA0-458AACEB09F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCP.Application", "src\bcp-server\BCP.Application\BCP.Application.csproj", "{EC7794DE-D5DA-4ED7-963F-539B20667B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCP.Application", "src\bcp-server\BCP.Application\BCP.Application.csproj", "{EC7794DE-D5DA-4ED7-963F-539B20667B08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{231FAAC0-30C1-4FFF-8163-B7767E9A73FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

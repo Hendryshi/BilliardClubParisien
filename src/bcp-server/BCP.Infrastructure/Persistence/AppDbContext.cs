@@ -1,6 +1,7 @@
 ﻿using BCP.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using System.Xml;
 
 namespace BCP.Infrastructure.Persistence
 {
@@ -12,6 +13,8 @@ namespace BCP.Infrastructure.Persistence
 		}
 
 		public DbSet<User> Users { get; set; }
+
+		public DbSet<Inscription> Inscriptions {  get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -26,6 +29,24 @@ namespace BCP.Infrastructure.Persistence
 				m.HasIndex(x => x.UserName).IsUnique();
 				m.Property(x => x.PasswordHash).IsRequired();
 				m.Property(x => x.PasswordSalt).IsRequired();
+			});
+
+			modelBuilder.Entity<Inscription>(m =>
+			{
+				m.HasKey(x => x.Id);
+				m.Property(x => x.FirstName).IsRequired();
+				m.Property(x => x.LastName).IsRequired();
+				m.Property(x => x.Sex).IsRequired();
+				m.Property(x => x.Email).IsRequired();
+				m.Property(x => x.Phone);
+				m.Property(x => x.IsMemberBefore).HasDefaultValue(false);
+				m.Property(x => x.Formula).IsRequired();
+				m.Property(x => x.JoinCompetition).HasDefaultValue(false);
+				m.Property(x => x.CompetitionCats);
+				m.Property(x => x.Motivation);
+				m.Property(x => x.Status).IsRequired();
+				m.Property(x => x.DtCreate);
+				m.Property(x => x.DtUpdate);
 			});
 		}
 	}

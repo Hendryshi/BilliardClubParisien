@@ -21,6 +21,7 @@ namespace BCP.Infrastructure
 			});
 
 			services.AddTransient<IUserRepository, UserRepository>();
+			services.AddTransient<IInscriptionRepository, InscriptionRepository>();
 
 			return services;
 		}
