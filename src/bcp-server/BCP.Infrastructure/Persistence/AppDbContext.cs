@@ -23,6 +23,7 @@ namespace BCP.Infrastructure.Persistence
 			{
 				m.HasKey(x => x.Id);
 				m.Property(x => x.UserName).IsRequired();
+				m.HasIndex(x => x.UserName).IsUnique();
 				m.Property(x => x.PasswordHash).IsRequired();
 				m.Property(x => x.PasswordSalt).IsRequired();
 			});
