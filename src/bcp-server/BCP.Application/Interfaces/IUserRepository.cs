@@ -8,5 +8,6 @@ namespace BCP.Application.Interfaces
 		Task<Result<User>> AddAsync(User oobject);
 		Task<Result> CommitOperationsAsync();
 		Task<Result<User>> GetAsync(int id);
+		Task<Result<User>> GetByNameAsync(string userName, CancellationToken cancellationToken);
 	}
 }

@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Common.Application.Behaviours;
 using FluentValidation;
+using BCP.Application.Interfaces;
+using BCP.Application.Services;
 
 namespace BCP.Application
 {
@@ -31,8 +33,11 @@ namespace BCP.Application
 				cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 				cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
 				cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-
 			});
+
+
+			services.AddScoped<IPasswordHasher, PasswordHasher>();
+			services.AddScoped<ITokenService, TokenService>();
 
 			return services;
 		}

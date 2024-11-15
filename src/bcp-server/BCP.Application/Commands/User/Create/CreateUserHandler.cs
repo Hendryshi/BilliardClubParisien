@@ -14,11 +14,13 @@ namespace BCP.Application.Commands.User.Create
 	{
 		private readonly IMapper _mapper;
 		private readonly IUserRepository _repo;
+		private readonly IPasswordHasher _passwordHasher;
 		private readonly ILogger<CreateUserHandler> _logger;
 
-		public CreateUserHandler(IMapper mapper, IUserRepository repo, ILogger<CreateUserHandler> logger)
+		public CreateUserHandler(IMapper mapper, IPasswordHasher passwordHasher, IUserRepository repo, ILogger<CreateUserHandler> logger)
 		{
 			_mapper = mapper;
+			_passwordHasher = passwordHasher;
 			_repo = repo;
 			_logger = logger;
 		}
@@ -31,10 +33,13 @@ namespace BCP.Application.Commands.User.Create
 				//Map the command to domain entity
 				var entity = _mapper.Map<Domain.Entities.User>(request.Data);
 
-				using(var hmac = new HMACSHA512())
+				var hashResult = _passwordHasher.HashPassword(request.Data.Password);
+				if(hashResult.IsFailed) 
+					return hashResult.ToResult();
+				else
 				{
-					entity.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Data.Password));
-					entity.PasswordSalt = hmac.Key;
+					entity.PasswordSalt = hashResult.Value.Salt;
+					entity.PasswordHash = hashResult.Value.Hash;
 				}
 
 				//Call domain method

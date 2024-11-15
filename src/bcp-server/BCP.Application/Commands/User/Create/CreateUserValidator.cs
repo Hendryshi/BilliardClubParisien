@@ -15,7 +15,7 @@ namespace BCP.Application.Commands.User.Create
 			public UserCreateValidator()
 			{
 				RuleFor(x => x.Id).Empty();
-				RuleFor(x => x.UserName).NotEmpty().WithMessage("must have username");
+				RuleFor(x => x.UserName).NotEmpty();
 				RuleFor(x => x.Password).NotEmpty();
 			}
 		}

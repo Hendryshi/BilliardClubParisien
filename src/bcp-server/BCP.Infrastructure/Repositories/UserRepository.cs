@@ -4,6 +4,7 @@ using BCP.Application.Services.Helpers;
 using BCP.Domain.Entities;
 using BCP.Infrastructure.Persistence;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace BCP.Infrastructure.Repositories
 {
@@ -36,11 +37,14 @@ namespace BCP.Infrastructure.Repositories
 		{
 			try
 			{
-				var response = await _dbContext.Users.FindAsync(id);
-				_dbContext.ChangeTracker.Clear();
-				if(response == null) throw new NotFoundException($"The user of id {id} does not exist.");
+				var response = await _dbContext.Users
+					.AsNoTracking()
+					.FirstOrDefaultAsync(u => u.Id == id);
 
-				return FluentResults.Result.Ok(response);
+				if(response == null) 
+					throw new NotFoundException($"The user of id {id} does not exist.");
+
+				return Result.Ok(response);
 			}
 			catch(Exception e)
 			{
@@ -48,6 +52,26 @@ namespace BCP.Infrastructure.Repositories
 			}
 		}
 
+		public async Task<Result<User>> GetByNameAsync(string userName, CancellationToken cancellationToken)
+		{
+			try
+			{
+				var user = await _dbContext.Users
+					.AsNoTracking()
+					.FirstOrDefaultAsync(u => u.UserName == userName, cancellationToken);
+
+				if (user == null)
+				{
+					return Result.Fail(new Error("User not found"));
+				}
+
+				return Result.Ok(user);
+			}
+			catch (Exception ex)
+			{
+				return Result.Fail(new Error(ex.Message));
+			}
+		}
 		#endregion
 
 		#region Common
