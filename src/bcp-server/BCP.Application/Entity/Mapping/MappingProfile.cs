@@ -10,7 +10,8 @@ namespace BCP.Application.Entity.Mapping
 		public MappingProfile()
 		{
 			CreateMap<Commands.User.Models.UserCommand, Domain.Entities.User>();
-			CreateMap<Commands.Inscription.Models.InscriptionCommand, Domain.Entities.Inscription>();
+			CreateMap<InscriptionCommand, Domain.Entities.Inscription>()
+				.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
 			CreateMap<Domain.Entities.User, Responses.User.UserResponse>();
 			CreateMap<Inscription, Responses.Inscription.InscriptionResponse>();

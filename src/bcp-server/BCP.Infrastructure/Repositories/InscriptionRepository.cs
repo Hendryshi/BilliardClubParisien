@@ -5,6 +5,7 @@ using BCP.Domain.Entities;
 using BCP.Infrastructure.Persistence;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BCP.Infrastructure.Repositories
 {
@@ -47,6 +48,18 @@ namespace BCP.Infrastructure.Repositories
 					throw new NotFoundException($"The inscription of id {id} does not exist.");
 
 				return Result.Ok(response);
+			}
+			catch(Exception e)
+			{
+				return ResultHelper.MapToResult(e);
+			}
+		}
+
+		public async Task<Result<List<Inscription>>> GetAllAsync()
+		{
+			try
+			{
+				return await _dbContext.Inscriptions.AsNoTracking().ToListAsync();
 			}
 			catch(Exception e)
 			{

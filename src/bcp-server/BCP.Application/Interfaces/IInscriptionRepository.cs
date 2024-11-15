@@ -7,6 +7,7 @@ namespace BCP.Application.Interfaces
 	{
 		Task<Result<Inscription>> AddAsync(Inscription oobject);
 		Task<Result> CommitOperationsAsync();
+		Task<Result<List<Inscription>>> GetAllAsync();
 		Task<Result<Inscription>> GetAsync(int id);
 		Task<Result<Inscription>> GetByNameAsync(string firstName, string lastName, CancellationToken cancellationToken);
 		Task<Result<Inscription>> UpdateAsync(Inscription oobject);
