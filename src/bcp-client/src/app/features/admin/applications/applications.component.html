@@ -85,9 +85,9 @@
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Statut</th>
               <td mat-cell *matCellDef="let application">
-                <span [class]="'status-badge ' + getStatusClass(application.status)">
-                  <mat-icon>{{getStatusIcon(application.status)}}</mat-icon>
-                  {{application.status}}
+                <span class="status-chip" [ngClass]="getStatusClass(application.status)">
+                  <mat-icon class="status-icon">{{ getStatusIcon(application.status) }}</mat-icon>
+                  {{ application.status }}
                 </span>
               </td>
             </ng-container>
