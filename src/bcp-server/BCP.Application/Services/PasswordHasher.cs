@@ -60,7 +60,7 @@ namespace BCP.Application.Services
 					numBytesRequested: HashSize);
 
 				// 使用固定时间比较防止计时攻击
-				if(CryptographicOperations.FixedTimeEquals(computedHash, hash))
+				if(!CryptographicOperations.FixedTimeEquals(computedHash, hash))
 					return Result.Fail("Invalid password");
 
 				return Result.Ok();

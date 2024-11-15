@@ -3,6 +3,9 @@ using BCP.Application;
 using Serilog;
 using BCP.Api;
 using ZymLabs.NSwag.FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,19 @@ builder.Services.AddScoped<FluentValidationSchemaProcessor>(provider =>
 	return new FluentValidationSchemaProcessor(provider, validationRules, loggerFactory);
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+	.AddJwtBearer(opt =>
+	{
+		var tokenKey = builder.Configuration["JWT:SecretKey"] ?? throw new ArgumentNullException("Token key not found");
+		opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+		{
+			ValidateIssuer = false,
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
+			ValidateIssuerSigningKey = true,
+			ValidateAudience = false,
+		};
+	});
+
 
 var app = builder.Build();
 
@@ -46,6 +62,7 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
