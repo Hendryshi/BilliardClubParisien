@@ -6,8 +6,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
-import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 interface ApplicationDetail {
   id: number;
@@ -40,9 +38,7 @@ interface ApplicationDetail {
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
-    MatChipsModule,
-    PageHeaderComponent,
-    BreadcrumbComponent
+    MatChipsModule
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']

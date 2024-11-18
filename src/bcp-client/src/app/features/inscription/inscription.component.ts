@@ -11,8 +11,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
-import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 
 interface Genre {
   value: string;
@@ -43,9 +41,7 @@ interface Categorie {
     MatRadioModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatIconModule,
-    BreadcrumbComponent,
-    PageHeaderComponent
+    MatIconModule
   ],
   templateUrl: './inscription.component.html',
   styleUrls: ['./inscription.component.css'],

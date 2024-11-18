@@ -13,8 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
-import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 interface Application {
   id: number;
@@ -42,9 +40,7 @@ interface Application {
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    PageHeaderComponent,
-    BreadcrumbComponent
+    MatSelectModule
   ],
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.css']

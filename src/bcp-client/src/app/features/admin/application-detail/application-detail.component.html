@@ -1,17 +1,7 @@
 <div class="detail-container">
   <div class="header-section">
-    <app-breadcrumb [items]="[
-      { label: 'Accueil', link: '/home' },
-      { label: 'Admin', link: '/admin' },
-      { label: 'Gestion des Demandes', link: '/admin/applications' },
-      { label: 'Détail de la demande' }
-    ]"></app-breadcrumb>
-
-    <app-page-header
-      title="Détail de la Demande d'Inscription"
-      [subtitle]="'Demande de ' + application.prenom + ' ' + application.nom"
-      icon="person">
-    </app-page-header>
+    <h1 class="page-title">Détail de la Demande d'Inscription</h1>
+    <h2 class="page-subtitle">Demande de {{application.prenom}} {{application.nom}}</h2>
   </div>
 
   <div class="content-section">
