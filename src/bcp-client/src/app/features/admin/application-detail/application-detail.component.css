@@ -2,6 +2,9 @@
   padding: 24px 32px;
   width: 90%;
   margin: 0 auto;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 卡片样式 */
@@ -198,6 +201,7 @@ mat-chip {
   .detail-container {
     padding: 16px;
     width: 100%;
+    padding-bottom: 80px;
   }
 
   .detail-section {
