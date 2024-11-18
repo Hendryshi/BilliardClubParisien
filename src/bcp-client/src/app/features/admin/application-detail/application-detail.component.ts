@@ -99,6 +99,19 @@ Je suis particulièrement attiré par votre club pour sa réputation d'excellenc
     }
   }
 
+  getStatusIcon(status: string): string {
+    switch (status) {
+      case 'En attente':
+        return 'hourglass_empty';
+      case 'Approuvé':
+        return 'check_circle';
+      case 'Refusé':
+        return 'cancel';
+      default:
+        return 'info';
+    }
+  }
+
   goBack(): void {
     this.router.navigate(['/admin/applications']);
   }

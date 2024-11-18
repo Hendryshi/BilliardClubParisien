@@ -1,5 +1,8 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="toggleMenu()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
     <span class="logo" routerLink="/home" style="cursor: pointer">Billiard Club Parisien</span>
     
     <div class="toolbar-right">
@@ -10,7 +13,24 @@
     </div>
   </mat-toolbar>
 
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" [(opened)]="isMenuOpen" class="sidenav">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/inscription" (click)="isMenuOpen = false">
+          <mat-icon>how_to_reg</mat-icon>
+          <span class="nav-label">Demande Inscription</span>
+        </a>
+        <a mat-list-item routerLink="/admin/applications" (click)="isMenuOpen = false">
+          <mat-icon>list</mat-icon>
+          <span class="nav-label">Gestion des Demandes</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
