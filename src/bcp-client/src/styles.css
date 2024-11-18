@@ -3,10 +3,10 @@
 
 /* 全局样式 */
 html, body {
-  height: 100%;
+  /*eight: 100%;*/
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  overscroll-behavior: none;
+  /*overscroll-behavior: none;*/
 }
 
 /* Material Typography */
