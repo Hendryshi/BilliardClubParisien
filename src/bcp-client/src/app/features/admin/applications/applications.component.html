@@ -27,19 +27,10 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Sexe</mat-label>
-            <mat-select [(ngModel)]="genderFilter" (selectionChange)="applyFilter()">
-              <mat-option value="">Tous</mat-option>
-              <mat-option value="M">Masculin</mat-option>
-              <mat-option value="F">Féminin</mat-option>
-            </mat-select>
-          </mat-form-field>
-
           <button mat-stroked-button 
                   color="primary" 
                   class="clear-filters-btn"
-                  [disabled]="!searchText && !statusFilter && !genderFilter"
+                  [disabled]="!searchText && !statusFilter"
                   (click)="clearFilters()">
             <mat-icon>clear_all</mat-icon>
             Réinitialiser
@@ -48,28 +39,12 @@
 
         <div class="table-container">
           <table mat-table [dataSource]="dataSource" matSort matSortDisableClear class="applications-table">
-            <!-- Nom Column -->
-            <ng-container matColumnDef="nom">
+            <!-- Full Name Column -->
+            <ng-container matColumnDef="fullName">
               <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Nom</th>
-              <td mat-cell *matCellDef="let application">{{application.nom}}</td>
-            </ng-container>
-
-            <!-- Prénom Column -->
-            <ng-container matColumnDef="prenom">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Prénom</th>
-              <td mat-cell *matCellDef="let application">{{application.prenom}}</td>
-            </ng-container>
-
-            <!-- Formule Column -->
-            <ng-container matColumnDef="formule">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Formule</th>
-              <td mat-cell *matCellDef="let application">{{application.formule}}</td>
-            </ng-container>
-
-            <!-- Previous Member Column -->
-            <ng-container matColumnDef="previousMember">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Membre 2023-2024</th>
-              <td mat-cell *matCellDef="let application">{{application.previousMember}}</td>
+              <td mat-cell *matCellDef="let application">
+                {{application.prenom}} {{application.nom}}
+              </td>
             </ng-container>
 
             <!-- Status Column -->
@@ -77,10 +52,26 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Statut</th>
               <td mat-cell *matCellDef="let application">
                 <span [class]="'status-badge ' + getStatusClass(application.status)">
-                  <mat-icon>{{getStatusIcon(application.status)}}</mat-icon>
                   {{application.status}}
                 </span>
               </td>
+            </ng-container>
+
+            <!-- Formule Column -->
+            <ng-container matColumnDef="formule">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Formule</th>
+              <td mat-cell *matCellDef="let application">
+                <div class="formule-badge" [class]="application.formule.toLowerCase()" [matTooltip]="getFormuleTooltip(application.formule)">
+                  <mat-icon class="formule-icon">workspace_premium</mat-icon>
+                  {{application.formule}}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Previous Member Column -->
+            <ng-container matColumnDef="previousMember">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Membre 2023-2024</th>
+              <td mat-cell *matCellDef="let application">{{application.previousMember}}</td>
             </ng-container>
 
             <!-- Actions Column -->

@@ -46,7 +46,7 @@ interface Application {
   styleUrls: ['./applications.component.css']
 })
 export class ApplicationsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nom', 'prenom', 'formule', 'previousMember', 'status', 'actions'];
+  displayedColumns: string[] = ['fullName', 'status', 'formule', 'previousMember', 'actions'];
   dataSource: MatTableDataSource<Application>;
   
   @ViewChild(MatSort) sort!: MatSort;
@@ -126,6 +126,8 @@ export class ApplicationsComponent implements AfterViewInit {
     
     this.dataSource.sortingDataAccessor = (item: Application, property: string): string | number => {
       switch(property) {
+        case 'fullName':
+          return `${item.prenom} ${item.nom}`.toLowerCase();
         case 'status':
           const statusOrder = {
             'En attente': 0,
@@ -206,5 +208,27 @@ export class ApplicationsComponent implements AfterViewInit {
     this.statusFilter = '';
     this.genderFilter = '';
     this.applyFilter();
+  }
+
+  getFormuleIcon(formule: string): string {
+    switch (formule.toLowerCase()) {
+      case 'gold':
+        return 'stars';
+      case 'silver':
+        return 'star_half';
+      default:
+        return 'star_outline';
+    }
+  }
+
+  getFormuleTooltip(formule: string): string {
+    switch (formule.toLowerCase()) {
+      case 'gold':
+        return 'Formule Gold - Accès illimité 7j/7, réservation 48h à l\'avance';
+      case 'silver':
+        return 'Formule Silver - Accès en semaine, réservation 24h à l\'avance';
+      default:
+        return 'Formule inconnue';
+    }
   }
 } 
