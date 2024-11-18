@@ -44,15 +44,27 @@ export class AppComponent {
     // 监听路由变化
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
+    ).subscribe((event: any) => {
       // 检查是否是移动端
       if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
         // 滚动到顶部
         window.scrollTo(0, 0);
-        // 同时确保内容区域也滚动到顶部
+        // 确保内容区域也滚动到顶部
         const contentElement = document.querySelector('.content');
         if (contentElement) {
           contentElement.scrollTop = 0;
+        }
+        // 如果是首页，确保主内容区域也滚动到顶部
+        if (event.url === '/' || event.url === '/home') {
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            const mainContent = document.querySelector('mat-sidenav-content');
+            if (mainContent) {
+              mainContent.scrollTop = 0;
+            }
+          }, 100);
         }
       }
     });
