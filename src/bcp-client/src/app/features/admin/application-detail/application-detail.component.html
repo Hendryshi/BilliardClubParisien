@@ -1,38 +1,33 @@
 <div class="detail-container">
   <div class="header-section">
     <h1 class="page-title">Détail de la Demande d'Inscription</h1>
-    <h2 class="page-subtitle">Demande de {{application.prenom}} {{application.nom}}</h2>
   </div>
 
   <div class="content-section">
     <mat-card class="detail-card">
       <mat-card-content>
-        <div class="detail-section status-section">
-          <div class="section-header">
-            <mat-icon class="section-icon">info</mat-icon>
-            <h3>Statut de la Demande</h3>
+        <div class="detail-section main-info-section">
+          <div class="applicant-info">
+            <div class="applicant-name">
+              <span class="full-name">{{application.prenom}} {{application.nom}}</span>
+            </div>
+            <div class="status-container">
+              <span [class]="'status-badge ' + getStatusClass(application.status)">
+                <mat-icon class="status-icon">{{getStatusIcon(application.status)}}</mat-icon>
+                {{application.status}}
+              </span>
+            </div>
           </div>
-          <span [class]="'status-badge ' + getStatusClass(application.status)">
-            {{application.status}}
-          </span>
         </div>
 
         <mat-divider></mat-divider>
 
         <div class="detail-section">
           <div class="section-header">
-            <mat-icon class="section-icon">person</mat-icon>
-            <h3>Informations Personnelles</h3>
+            <mat-icon class="section-icon">contact_mail</mat-icon>
+            <h3>Coordonnées</h3>
           </div>
           <div class="detail-grid">
-            <div class="detail-item">
-              <span class="label">Nom</span>
-              <span class="value">{{application.nom}}</span>
-            </div>
-            <div class="detail-item">
-              <span class="label">Prénom</span>
-              <span class="value">{{application.prenom}}</span>
-            </div>
             <div class="detail-item">
               <span class="label">Email</span>
               <span class="value">{{application.email}}</span>
