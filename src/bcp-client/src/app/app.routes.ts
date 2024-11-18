@@ -25,5 +25,10 @@ export const routes: Routes = [
     path: 'admin/applications/:id',
     loadComponent: () => import('./features/admin/application-detail/application-detail.component')
       .then(m => m.ApplicationDetailComponent)
+  },
+  {
+    path: 'admin/login',
+    loadComponent: () => import('./features/admin/login/login.component')
+      .then(m => m.LoginComponent)
   }
 ];

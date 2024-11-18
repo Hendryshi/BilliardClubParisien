@@ -6,10 +6,22 @@
     <span class="logo" routerLink="/home" style="cursor: pointer">Billiard Club Parisien</span>
     
     <div class="toolbar-right">
-      <button mat-button class="login-button" routerLink="/admin/login">
-        <mat-icon>login</mat-icon>
-        <span>Admin Login</span>
-      </button>
+      <ng-container *ngIf="isAuthenticated$ | async; else loginButton">
+        <button mat-button class="user-button">
+          <mat-icon>person</mat-icon>
+          <span>Admin</span>
+        </button>
+        <button mat-button class="logout-button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Déconnexion</span>
+        </button>
+      </ng-container>
+      <ng-template #loginButton>
+        <button mat-button class="login-button" routerLink="/admin/login">
+          <mat-icon>login</mat-icon>
+          <span>Admin Login</span>
+        </button>
+      </ng-template>
     </div>
   </mat-toolbar>
 

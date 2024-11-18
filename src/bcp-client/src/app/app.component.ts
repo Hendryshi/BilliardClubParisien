@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, filter } from 'rxjs/operators';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,10 @@ import { map, shareReplay, filter } from 'rxjs/operators';
 export class AppComponent {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
+  private authService = inject(AuthService);
+  
   sidenavOpened = false;
+  isAuthenticated$ = this.authService.isAuthenticated$;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -62,5 +66,10 @@ export class AppComponent {
 
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
