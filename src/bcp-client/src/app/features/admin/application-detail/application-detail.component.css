@@ -282,4 +282,28 @@ mat-chip {
 .status-rejected {
   background-color: #FFF1F0;
   color: #CF1322;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1a237e;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  font-weight: normal;
+  color: #666;
+  margin: 0;
+}
+
+@media screen and (max-width: 599px) {
+  .page-title {
+    font-size: 20px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+  }
 } 
