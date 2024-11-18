@@ -1,6 +1,6 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="toolbar">
-    <button mat-icon-button (click)="toggleMenu()" class="menu-button">
+    <button mat-icon-button (click)="sidenav.toggle(); toggleSidenav()" class="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="logo" routerLink="/home" style="cursor: pointer">Billiard Club Parisien</span>
@@ -14,20 +14,24 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="over" [(opened)]="isMenuOpen" class="sidenav">
+    <mat-sidenav #sidenav
+                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
+                 [opened]="!(isHandset$ | async) && sidenavOpened"
+                 [fixedInViewport]="true"
+                 fixedTopGap="64">
       <mat-nav-list>
-        <a mat-list-item routerLink="/inscription" (click)="isMenuOpen = false">
+        <a mat-list-item routerLink="/inscription" (click)="handleMenuClick(sidenav)">
           <mat-icon>how_to_reg</mat-icon>
           <span class="nav-label">Demande Inscription</span>
         </a>
-        <a mat-list-item routerLink="/admin/applications" (click)="isMenuOpen = false">
+        <a mat-list-item routerLink="/admin/applications" (click)="handleMenuClick(sidenav)">
           <mat-icon>list</mat-icon>
           <span class="nav-label">Gestion des Demandes</span>
         </a>
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content [class.sidenav-open]="sidenavOpened">
       <div class="content">
         <router-outlet></router-outlet>
       </div>
