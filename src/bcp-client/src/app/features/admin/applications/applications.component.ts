@@ -21,8 +21,16 @@ interface Application {
   nom: string;
   prenom: string;
   formule: string;
-  status: 'En attente' | 'Approuvé' | 'Refusé';
+  status: 'En attente' | 'Approuvé' | 'Refusé' | 'En cours' | 'Brouillon';
   previousMember: 'Oui' | 'Non';
+}
+
+export enum ApplicationStatus {
+  EN_ATTENTE = 'En attente',
+  APPROUVE = 'Approuvé',
+  REFUSE = 'Refusé',
+  EN_COURS = 'En cours',
+  BROUILLON = 'Brouillon'
 }
 
 @Component({
@@ -152,29 +160,25 @@ export class ApplicationsComponent implements AfterViewInit {
   }
 
   getStatusClass(status: string): string {
-    switch (status) {
-      case 'En attente':
-        return 'status-pending';
-      case 'Approuvé':
-        return 'status-approved';
-      case 'Refusé':
-        return 'status-rejected';
-      default:
-        return '';
-    }
+    const statusClasses: { [key: string]: string } = {
+      'En attente': 'status-pending',
+      'Approuvé': 'status-approved',
+      'Refusé': 'status-rejected',
+      'En cours': 'status-in-review',
+      'Brouillon': 'status-draft'
+    };
+    return statusClasses[status] || '';
   }
 
   getStatusIcon(status: string): string {
-    switch (status) {
-      case 'En attente':
-        return 'hourglass_empty';
-      case 'Approuvé':
-        return 'check_circle';
-      case 'Refusé':
-        return 'cancel';
-      default:
-        return '';
-    }
+    const statusIcons: { [key: string]: string } = {
+      'En attente': 'hourglass_empty',
+      'Approuvé': 'check_circle',
+      'Refusé': 'cancel',
+      'En cours': 'pending',
+      'Brouillon': 'edit_note'
+    };
+    return statusIcons[status] || '';
   }
 
   applyFilter() {

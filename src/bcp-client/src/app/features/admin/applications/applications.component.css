@@ -1,229 +1,149 @@
 .applications-container {
-  padding: 24px 32px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  width: 90%;
-  margin: 0 auto;
-  height: calc(100vh - 64px);
 }
 
-.header-section {
+/* 固定在顶部的面包屑 */
+.breadcrumb-section {
   position: sticky;
   top: 0;
-  z-index: 2;
-  padding-bottom: 24px;
-  background: none;
+  z-index: 10;
+  background-color: #fff;
+  padding: 16px 24px 0;
 }
 
-.content-section {
+/* 可滚动的主要内容区域 */
+.scrollable-content {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 32px;
+  padding: 0 24px 24px;
+  box-sizing: border-box;
+}
+
+/* 页面标题和内容部分 */
+.main-content {
+  padding-top: 24px;
 }
 
 /* 自定义滚动条样式 */
-.content-section::-webkit-scrollbar {
-  width: 6px;
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.content-section::-webkit-scrollbar-track {
-  background: transparent;
+.scrollable-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
 }
 
-.content-section::-webkit-scrollbar-thumb {
-  background: #E0E0E0;
-  border-radius: 3px;
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
   transition: background 0.2s ease;
 }
 
-.content-section::-webkit-scrollbar-thumb:hover {
-  background: #BDBDBD;
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.26);
+}
+
+/* Firefox滚动条样式 */
+.scrollable-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.12) #f1f1f1;
+}
+
+.header-section {
+  margin-bottom: 24px;
+}
+
+.content-section {
+  margin-bottom: 24px;
 }
 
 .filters-section {
   display: flex;
-  align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
 }
 
-mat-form-field {
-  width: 200px;
-}
-
-.clear-filters-btn {
-  margin-top: -8px;
-  margin-bottom: 16px;
-  height: 48px;
-  padding: 0 24px;
-  white-space: nowrap;
-  margin-left: auto;
-  font-size: 15px;
-}
-
-.clear-filters-btn mat-icon {
-  font-size: 20px;
-  height: 20px;
-  width: 20px;
-  margin-right: 8px;
-}
-
-/* 表格样式 */
 .table-container {
   overflow: auto;
+  margin-top: 20px;
+  
+  table {
+    width: 100%;
+  }
 }
 
-.applications-table {
-  width: 100%;
-  min-width: 1000px;
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .applications-container {
+    padding: 16px;
+  }
+  
+  .filters-section {
+    gap: 12px;
+  }
 }
 
-/* 表头样式 */
-.mat-mdc-header-cell {
-  padding: 12px 16px;
-  font-weight: 600 !important;
-  color: #1a237e !important;
-  background: #E8EAF6 !important;
-  border-bottom: 2px solid #3F51B5 !important;
-  white-space: nowrap;
-  font-size: 13px !important;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* 表格内容单元格样式 */
-.mat-mdc-cell {
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 13px;
-}
-
-/* 表格行样式 */
-.mat-mdc-row {
-  height: 48px;
-  background-color: white;
-}
-
-.mat-mdc-row:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.mat-mdc-row:hover {
-  background-color: #f5f5f5;
-  transition: background-color 0.2s ease;
-}
-
-/* Status badge styles */
-.status-badge {
-  padding: 6px 12px;
+.status-chip {
+  padding: 4px 12px;
   border-radius: 16px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
+  text-align: center;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 100px;
-  text-align: center;
+  min-width: 80px;
   gap: 4px;
-  transition: all 0.2s ease;
 }
 
-.status-badge mat-icon {
+.status-icon {
   font-size: 16px;
   height: 16px;
   width: 16px;
+  margin-right: 4px;
 }
 
-.status-pending {
-  background-color: #FFF8E1;
-  color: #F57F17;
+.status-chip.status-pending {
+  background-color: #FFF3E0;
+  color: #E65100;
 }
 
-.status-pending:hover mat-icon {
-  animation: rotate 1.5s linear infinite;
-}
-
-.status-approved {
+.status-chip.status-approved {
   background-color: #E8F5E9;
-  color: #2E7D32;
+  color: #1B5E20;
 }
 
-.status-rejected {
-  background-color: #FFF1F0;
-  color: #CF1322;
+.status-chip.status-rejected {
+  background-color: #FFEBEE;
+  color: #B71C1C;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.status-chip.status-in-review {
+  background-color: #E3F2FD;
+  color: #0D47A1;
 }
 
-@media screen and (max-width: 1024px) {
-  .filters-section {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  mat-form-field {
-    flex: 1;
-    min-width: 150px;
-  }
+.status-chip.status-draft {
+  background-color: #F5F5F5;
+  color: #424242;
 }
 
-@media screen and (max-width: 599px) {
-  .applications-container {
-    padding: 16px 16px;
-    width: 100%;
+@media (max-width: 600px) {
+  .status-chip {
+    padding: 2px 8px;
+    font-size: 12px;
+    min-width: 60px;
   }
-
-  .header-section {
-    padding-bottom: 16px;
-  }
-
-  .filters-section {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  mat-form-field {
-    width: calc(50% - 4px);
-    min-width: unset;
-    margin: 0;
-  }
-
-  .clear-filters-btn {
-    width: 100%;
-    margin: 0;
-    height: 36px;
+  
+  .status-icon {
     font-size: 14px;
-  }
-
-  .clear-filters-btn mat-icon {
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
-  }
-
-  mat-card {
-    margin-bottom: 24px;
-  }
-
-  .content-section {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .content-section::-webkit-scrollbar {
-    display: none;
+    height: 14px;
+    width: 14px;
+    margin-right: 2px;
   }
 } 
