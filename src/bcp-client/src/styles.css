@@ -3,8 +3,12 @@
 
 /* 全局样式 */
 html, body {
-  /*eight: 100%;*/
   margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   /*overscroll-behavior: none;*/
 }

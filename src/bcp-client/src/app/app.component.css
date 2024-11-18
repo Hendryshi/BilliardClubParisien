@@ -1,9 +1,11 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  position: fixed;
   overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toolbar {
@@ -20,15 +22,16 @@
 
 .content {
   margin-top: 64px;
-  width: 100%;
-  height: calc(100vh - 64px);
-  overflow: auto;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
 @media screen and (max-width: 599px) {
   .content {
     margin-top: 56px;
-    height: calc(100vh - 56px);
+    height: calc(100% - 56px);
   }
 
   .toolbar {
