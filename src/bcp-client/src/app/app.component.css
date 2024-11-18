@@ -18,35 +18,16 @@
   padding: 0 24px;
 }
 
-.sidenav-container {
-  flex: 1;
-  margin-top: 64px; /* toolbar height */
-  width: 100%;
-}
-
-mat-sidenav {
-  width: 250px;
-}
-
-mat-sidenav-content {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 64px);
-  overflow: hidden;
-}
-
 .content {
-  flex: 1;
+  margin-top: 64px;
+  width: 100%;
+  height: calc(100vh - 64px);
   overflow: auto;
-  position: relative;
 }
 
 @media screen and (max-width: 599px) {
-  .sidenav-container {
-    margin-top: 56px; /* mobile toolbar height */
-  }
-
-  mat-sidenav-content {
+  .content {
+    margin-top: 56px;
     height: calc(100vh - 56px);
   }
 
