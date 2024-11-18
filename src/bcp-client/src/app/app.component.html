@@ -20,11 +20,11 @@
                  [fixedInViewport]="true"
                  fixedTopGap="64">
       <mat-nav-list>
-        <a mat-list-item routerLink="/inscription" (click)="handleMenuClick(sidenav)">
+        <a mat-list-item routerLink="/inscription" (click)="sidenav.close(); toggleSidenav()">
           <mat-icon>how_to_reg</mat-icon>
           <span class="nav-label">Demande Inscription</span>
         </a>
-        <a mat-list-item routerLink="/admin/applications" (click)="handleMenuClick(sidenav)">
+        <a mat-list-item routerLink="/admin/applications" (click)="sidenav.close(); toggleSidenav()">
           <mat-icon>list</mat-icon>
           <span class="nav-label">Gestion des Demandes</span>
         </a>
