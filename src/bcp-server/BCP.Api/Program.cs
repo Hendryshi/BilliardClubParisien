@@ -58,6 +58,9 @@ if(app.Environment.IsDevelopment())
 	});
 
 }
+
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();

@@ -10,7 +10,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { InscriptionService } from '../../api/api/inscription.service';
+import { InscriptionCommand } from '../../api/model/inscriptionCommand';
 
 interface Genre {
   value: string;
@@ -88,7 +92,12 @@ export class InscriptionComponent {
     { value: 'national', viewValue: 'Niveau National' }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private inscriptionService: InscriptionService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
     this.inscriptionForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
@@ -124,8 +133,63 @@ export class InscriptionComponent {
 
   onSubmit() {
     if (this.inscriptionForm.valid) {
-      console.log(this.inscriptionForm.value);
-      // TODO: 处理表单提交
+      const formValue = this.inscriptionForm.value;
+      
+      const selectedCategories = Object.entries(formValue.categories || {})
+        .filter(([_, selected]) => selected)
+        .map(([category]) => category.toUpperCase());
+      
+      const inscriptionCommand: InscriptionCommand = {
+        firstName: formValue.prenom,
+        lastName: formValue.nom,
+        email: formValue.email,
+        phone: formValue.telephone,
+        sex: formValue.sexe,
+        status: 'PENDING',
+        isMemberBefore: formValue.previousMember === 'oui',
+        formula: formValue.formule,
+        joinCompetition: formValue.competition === 'oui',
+        competitionCats: selectedCategories,
+        motivation: formValue.motivation || ''
+      };
+
+      const successConfig: MatSnackBarConfig = {
+        duration: 5000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      };
+
+      const errorConfig: MatSnackBarConfig = {
+        duration: 8000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      };
+
+      this.inscriptionService.inscriptionCreate({ data: inscriptionCommand })
+        .subscribe({
+          next: () => {
+            this.inscriptionForm.reset();
+            this.router.navigate(['/home']).then(() => {
+              setTimeout(() => {
+                this.snackBar.open(
+                  '🎉 Félicitations! Votre inscription a été enregistrée avec succès!', 
+                  'Fermer',
+                  successConfig
+                );
+              }, 100);
+            });
+          },
+          error: (error) => {
+            console.error('Inscription error:', error);
+            this.snackBar.open(
+              '❌ Une erreur est survenue lors de l\'inscription. Veuillez réessayer ou contacter le support si le problème persiste.',
+              'Fermer',
+              errorConfig
+            );
+          }
+        });
     }
   }
 

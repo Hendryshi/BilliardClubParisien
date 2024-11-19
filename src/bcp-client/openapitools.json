@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "6.2.1",
+    "generators": {
+      "angular": {
+        "generatorName": "typescript-angular",
+        "output": "src/app/api",
+        "inputSpec": "./swagger.json",
+        "additionalProperties": {
+          "ngVersion": "18.2.0",
+          "supportsES6": true,
+          "npmName": "rest-api-client",
+          "npmVersion": "1.0.0",
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+} 

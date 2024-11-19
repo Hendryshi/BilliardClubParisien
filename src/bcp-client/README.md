@@ -28,3 +28,12 @@
 - Angular CLI (v17+)
 
 ## 项目结构
+
+# API集成说明
+
+本项目使用OpenAPI Generator自动生成API客户端代码，实现了与后端Swagger接口的无缝集成。
+
+## 生成API客户端代码
+
+1. 确保swagger.json文件位于项目根目录
+2. 运行命令生成API代码：

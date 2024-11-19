@@ -1,0 +1,537 @@
+{
+  "x-generator": "NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BilliardClubParisien.Api",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8001"
+    }
+  ],
+  "paths": {
+    "/api/Inscription": {
+      "post": {
+        "tags": [
+          "Inscription"
+        ],
+        "operationId": "Inscription_Create",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInscriptionRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInscriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Inscription/{id}": {
+      "get": {
+        "tags": [
+          "Inscription"
+        ],
+        "operationId": "Inscription_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetInscriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Inscription"
+        ],
+        "operationId": "Inscription_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInscriptionRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateInscriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Inscription/All": {
+      "get": {
+        "tags": [
+          "Inscription"
+        ],
+        "operationId": "Inscription_GetAllInscriptions",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllInscriptionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "User_Create",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "User_Login",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateInscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InscriptionResponse"
+              }
+            ]
+          }
+        }
+      },
+      "InscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sex": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMemberBefore": {
+            "type": "boolean"
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinCompetition": {
+            "type": "boolean"
+          },
+          "competitionCats": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "motivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "dtCreate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dtUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "CreateInscriptionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "nullable": false,
+            "$ref": "#/components/schemas/InscriptionCommand"
+          }
+        }
+      },
+      "InscriptionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "sex",
+          "email",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "sex": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMemberBefore": {
+            "type": "boolean"
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinCompetition": {
+            "type": "boolean"
+          },
+          "competitionCats": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "motivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "GetInscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InscriptionResponse"
+              }
+            ]
+          }
+        }
+      },
+      "GetAllInscriptionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InscriptionResponse"
+            }
+          }
+        }
+      },
+      "UpdateInscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InscriptionResponse"
+              }
+            ]
+          }
+        }
+      },
+      "UpdateInscriptionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "nullable": false,
+            "$ref": "#/components/schemas/InscriptionCommand"
+          }
+        }
+      },
+      "CreateUserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserResponse"
+              }
+            ]
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "userName",
+          "passwordHash",
+          "passwordSalt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "userName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "passwordHash": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          },
+          "passwordSalt": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1
+          }
+        }
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "nullable": false,
+            "$ref": "#/components/schemas/UserCommand"
+          }
+        }
+      },
+      "UserCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userName",
+          "password"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "LoginUserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "accessToken": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "LoginUserRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userName",
+          "password"
+        ],
+        "properties": {
+          "userName": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      }
+    }
+  }
+}
