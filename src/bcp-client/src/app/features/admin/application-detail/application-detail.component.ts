@@ -1,98 +1,82 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-
-interface ApplicationDetail {
-  id: number;
-  nom: string;
-  prenom: string;
-  email: string;
-  telephone: string;
-  sexe: string;
-  formule: string;
-  previousMember: string;
-  competition: string;
-  categories?: {
-    junior: boolean;
-    mixte: boolean;
-    feminine: boolean;
-    regional: boolean;
-    national: boolean;
-  };
-  motivation?: string;
-  status: string;
-}
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { InscriptionService } from '../../../api/api/inscription.service';
+import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
 
 @Component({
   selector: 'app-application-detail',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     MatCardModule,
-    MatDividerModule,
-    MatIconModule,
     MatButtonModule,
-    MatChipsModule
+    MatIconModule,
+    MatChipsModule,
+    MatDividerModule
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
 })
 export class ApplicationDetailComponent implements OnInit {
-  applicationId: number = 0;
-  application: ApplicationDetail = {
-    id: 1,
-    nom: 'Dupont',
-    prenom: 'Jean',
-    email: 'jean.dupont@email.com',
-    telephone: '0612345678',
-    sexe: 'M',
-    formule: 'Gold',
-    previousMember: 'Non',
-    competition: 'Oui',
-    categories: {
-      junior: true,
-      mixte: true,
-      feminine: false,
-      regional: true,
-      national: true
-    },
-    motivation: `En tant que passionné de billard depuis mon plus jeune âge, je souhaite rejoindre votre club prestigieux pour plusieurs raisons. Tout d'abord, ma motivation principale est de progresser techniquement et tactiquement dans ce sport que j'affectionne particulièrement. J'ai commencé à jouer il y a environ cinq ans et j'ai rapidement développé une véritable passion pour cette discipline qui allie précision, stratégie et concentration.
-
-À court terme, mon objectif est de perfectionner ma technique de base, notamment en travaillant sur la précision de mes coups et la maîtrise de l'effet. Je souhaite également améliorer ma lecture du jeu et ma capacité à construire des séries plus longues. Pour cela, je suis prêt à m'investir pleinement dans les entraînements et à suivre les conseils des joueurs plus expérimentés du club.
-
-À moyen terme, je vise une progression significative de mon niveau de jeu pour pouvoir participer activement aux compétitions régionales. J'aimerais représenter le club dans différents tournois et contribuer à ses succès sportifs. Je suis particulièrement intéressé par les compétitions par équipes, car j'apprécie l'aspect collectif et l'esprit d'équipe qu'elles développent.
-
-Sur le long terme, mon ambition est d'atteindre un niveau national et de participer aux championnats de France. Je sais que cela demande beaucoup de travail et de persévérance, mais je suis déterminé à mettre en œuvre tous les moyens nécessaires pour y parvenir. Je souhaite également partager ma passion avec les autres membres du club et, pourquoi pas, m'impliquer dans la formation des jeunes joueurs une fois que j'aurai acquis suffisamment d'expérience.
-
-Cette saison, je souhaite participer à au moins six tournois pour acquérir de l'expérience en compétition. Je suis conscient que cela représente un engagement important, mais je suis prêt à organiser mon temps en conséquence. Mon objectif est d'obtenir des résultats significatifs dans ma catégorie et de progresser dans le classement national.
-
-Je suis particulièrement attiré par votre club pour sa réputation d'excellence, la qualité de ses installations et l'encadrement professionnel qu'il propose. Je suis convaincu que c'est l'environnement idéal pour progresser et atteindre mes objectifs sportifs.`,
-    status: 'En attente'
-  };
+  application: InscriptionResponse | null = null;
+  isLoading = true;
+  error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private inscriptionService: InscriptionService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
-    this.applicationId = Number(this.route.snapshot.paramMap.get('id'));
-    // TODO: 使用 ID 从服务获取申请详情
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadApplication(parseInt(id, 10));
+    }
+  }
+
+  private loadApplication(id: number) {
+    this.isLoading = true;
+    this.error = null;
+
+    this.inscriptionService.inscriptionGet(id)
+      .subscribe({
+        next: (response) => {
+          if (response.data) {
+            this.application = {
+              ...response.data,
+              motivation: response.data.motivation || 'Aucune motivation fournie'
+            };
+          } else {
+            this.application = null;
+            this.error = 'Demande non trouvée';
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error loading application:', error);
+          this.error = 'Une erreur est survenue lors du chargement des données';
+          this.isLoading = false;
+          this.application = null;
+        }
+      });
   }
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'En attente':
+      case 'PENDING':
         return 'status-pending';
-      case 'Approuvé':
+      case 'APPROVED':
         return 'status-approved';
-      case 'Refusé':
+      case 'REJECTED':
         return 'status-rejected';
       default:
         return '';
@@ -101,28 +85,65 @@ Je suis particulièrement attiré par votre club pour sa réputation d'excellenc
 
   getStatusIcon(status: string): string {
     switch (status) {
-      case 'En attente':
+      case 'PENDING':
         return 'hourglass_empty';
-      case 'Approuvé':
+      case 'APPROVED':
         return 'check_circle';
-      case 'Refusé':
+      case 'REJECTED':
         return 'cancel';
       default:
-        return 'info';
+        return '';
     }
   }
 
-  goBack(): void {
-    this.router.navigate(['/admin/applications']);
+  getStatusDesc(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'En attente';
+      case 'APPROVED':
+        return 'Approuvé';
+      case 'REJECTED':
+        return 'Refusé';
+      default:
+        return status;
+    }
+  }
+
+  getFormuleClass(formule: string): string {
+    return formule.toLowerCase();
+  }
+
+  getFormuleIcon(formule: string): string {
+    switch (formule.toLowerCase()) {
+      case 'gold':
+        return 'stars';
+      case 'silver':
+        return 'star_half';
+      default:
+        return 'star_outline';
+    }
+  }
+
+  getFormuleTooltip(formule: string): string {
+    switch (formule.toLowerCase()) {
+      case 'gold':
+        return 'Formule Gold - Accès illimité 7j/7, réservation 48h à l\'avance';
+      case 'silver':
+        return 'Formule Silver - Accès en semaine, réservation 24h à l\'avance';
+      default:
+        return 'Formule inconnue';
+    }
   }
 
   approveApplication() {
-    // TODO: 实现批准逻辑
-    console.log('Approving application:', this.applicationId);
+    if (this.application?.id) {
+      console.log('Approving application:', this.application.id);
+    }
   }
 
   rejectApplication() {
-    // TODO: 实现拒绝逻辑
-    console.log('Rejecting application:', this.applicationId);
+    if (this.application?.id) {
+      console.log('Rejecting application:', this.application.id);
+    }
   }
 } 

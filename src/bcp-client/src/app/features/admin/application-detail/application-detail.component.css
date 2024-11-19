@@ -333,4 +333,45 @@ mat-chip {
   .page-title {
     font-size: 20px;
   }
+}
+
+.formule-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  letter-spacing: 0.4px;
+}
+
+.formule-badge.gold {
+  background-color: #FFF8E1;
+  color: #FF6F00;
+}
+
+.formule-badge.silver {
+  background-color: #ECEFF1;
+  color: #455A64;
+}
+
+.formule-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.formule-badge.gold .formule-icon {
+  color: #FFB300;
+}
+
+.formule-badge.silver .formule-icon {
+  color: #78909C;
+}
+
+.formule-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 } 
