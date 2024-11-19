@@ -9,12 +9,12 @@
         <div class="detail-section main-info-section">
           <div class="applicant-info">
             <div class="applicant-name">
-              <span class="full-name">{{application.prenom}} {{application.nom}}</span>
+              <span class="full-name">{{application?.firstName}} {{application?.lastName}}</span>
             </div>
             <div class="status-container">
-              <span [class]="'status-badge ' + getStatusClass(application.status)">
-                <mat-icon class="status-icon">{{getStatusIcon(application.status)}}</mat-icon>
-                {{application.status}}
+              <span [class]="'status-badge ' + getStatusClass(application?.status || '')">
+                <mat-icon class="status-icon">{{getStatusIcon(application?.status || '')}}</mat-icon>
+                {{getStatusDesc(application?.status || '')}}
               </span>
             </div>
           </div>
@@ -30,15 +30,15 @@
           <div class="detail-grid">
             <div class="detail-item">
               <span class="label">Email</span>
-              <span class="value">{{application.email}}</span>
+              <span class="value">{{application?.email}}</span>
             </div>
             <div class="detail-item">
               <span class="label">Téléphone</span>
-              <span class="value">{{application.telephone}}</span>
+              <span class="value">{{application?.phone}}</span>
             </div>
             <div class="detail-item">
               <span class="label">Sexe</span>
-              <span class="value">{{application.sexe === 'M' ? 'Masculin' : 'Féminin'}}</span>
+              <span class="value">{{application?.sex === 'M' ? 'Masculin' : 'Féminin'}}</span>
             </div>
           </div>
         </div>
@@ -52,36 +52,39 @@
           </div>
           <div class="detail-grid">
             <div class="detail-item">
-              <span class="label">Membre en 2023-2024</span>
-              <span class="value">{{application.previousMember}}</span>
+              <span class="label">Membre dernier année</span>
+              <span class="value">{{application?.isMemberBefore ? 'Oui' : 'Non'}}</span>
             </div>
             <div class="detail-item">
               <span class="label">Formule</span>
-              <span class="value">{{application.formule}}</span>
+              <div class="formule-badge" [class]="getFormuleClass(application?.formula || '')">
+                <mat-icon class="formule-icon">{{getFormuleIcon(application?.formula || '')}}</mat-icon>
+                {{application?.formula}}
+              </div>
             </div>
             <div class="detail-item">
               <span class="label">Participation aux compétitions</span>
-              <span class="value">{{application.competition}}</span>
+              <span class="value">{{application?.joinCompetition ? 'Oui' : 'Non'}}</span>
             </div>
           </div>
 
-          <div *ngIf="application.competition === 'Oui'" class="categories-section">
+          <div *ngIf="application?.joinCompetition" class="categories-section">
             <h4>Catégories sélectionnées</h4>
             <div class="categories-list">
               <mat-chip-set>
-                <mat-chip *ngIf="application.categories?.junior">
+                <mat-chip *ngIf="application?.competitionCats?.includes('JUNIOR')">
                   Catégorie Junior (-23 ans et moins)
                 </mat-chip>
-                <mat-chip *ngIf="application.categories?.mixte">
+                <mat-chip *ngIf="application?.competitionCats?.includes('MIXTE')">
                   Catégorie Mixte
                 </mat-chip>
-                <mat-chip *ngIf="application.categories?.feminine">
+                <mat-chip *ngIf="application?.competitionCats?.includes('FEMININE')">
                   Catégorie Féminine
                 </mat-chip>
-                <mat-chip *ngIf="application.categories?.regional">
+                <mat-chip *ngIf="application?.competitionCats?.includes('REGIONAL')">
                   Niveau Régional
                 </mat-chip>
-                <mat-chip *ngIf="application.categories?.national">
+                <mat-chip *ngIf="application?.competitionCats?.includes('NATIONAL')">
                   Niveau National
                 </mat-chip>
               </mat-chip-set>
@@ -91,20 +94,21 @@
 
         <mat-divider></mat-divider>
 
-        <div class="detail-section" *ngIf="application.motivation">
+        <div class="detail-section" *ngIf="application?.motivation">
           <div class="section-header">
             <mat-icon class="section-icon">description</mat-icon>
             <h3>Motivations et Objectifs</h3>
           </div>
           <div class="motivation-container">
-            <p class="motivation-text">{{application.motivation}}</p>
+            <p class="motivation-text">{{application?.motivation}}</p>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-card>&nbsp;</mat-card>
 
-  <div class="card-actions" *ngIf="application.status === 'En attente'">
+  <div class="card-actions" *ngIf="application?.status === 'PENDING'">
     <div class="card-actions-container">
       <div class="action-group">
         <button mat-flat-button 

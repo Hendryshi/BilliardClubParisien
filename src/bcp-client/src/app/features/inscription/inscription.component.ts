@@ -80,8 +80,8 @@ export class InscriptionComponent {
   ];
 
   formules: Formule[] = [
-    { value: 'silver', viewValue: 'Formule « Silver »' },
-    { value: 'gold', viewValue: 'Formule « Gold »' }
+    { value: 'Silver', viewValue: 'Formule « Silver »' },
+    { value: 'Gold', viewValue: 'Formule « Gold »' }
   ];
 
   categories: Categorie[] = [

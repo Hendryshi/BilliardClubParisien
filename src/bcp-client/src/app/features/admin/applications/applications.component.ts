@@ -13,15 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-
-interface Application {
-  id: number;
-  nom: string;
-  prenom: string;
-  formule: string;
-  status: 'En attente' | 'Approuvé' | 'Refusé';
-  previousMember: 'Oui' | 'Non';
-}
+import { InscriptionService } from '../../../api/api/inscription.service';
+import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
 
 @Component({
   selector: 'app-applications',
@@ -47,76 +40,17 @@ interface Application {
 })
 export class ApplicationsComponent implements AfterViewInit {
   displayedColumns: string[] = ['fullName', 'status', 'formule', 'previousMember', 'actions'];
-  dataSource: MatTableDataSource<Application>;
+  dataSource: MatTableDataSource<any>;
   
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  applications: Application[] = [
-    {
-      id: 1,
-      nom: 'Dupont',
-      prenom: 'Jean',
-      formule: 'Silver',
-      status: 'En attente',
-      previousMember: 'Oui'
-    },
-    {
-      id: 2,
-      nom: 'Martin',
-      prenom: 'Marie',
-      formule: 'Gold',
-      status: 'Approuvé',
-      previousMember: 'Non'
-    },
-    {
-      id: 3,
-      nom: 'Bernard',
-      prenom: 'Sophie',
-      formule: 'Gold',
-      status: 'Refusé',
-      previousMember: 'Non'
-    },
-    {
-      id: 4,
-      nom: 'Petit',
-      prenom: 'Thomas',
-      formule: 'Silver',
-      status: 'Approuvé',
-      previousMember: 'Oui'
-    },
-    {
-      id: 5,
-      nom: 'Dubois',
-      prenom: 'Claire',
-      formule: 'Gold',
-      status: 'En attente',
-      previousMember: 'Non'
-    },
-    {
-      id: 6,
-      nom: 'Moreau',
-      prenom: 'Lucas',
-      formule: 'Silver',
-      status: 'Refusé',
-      previousMember: 'Oui'
-    },
-    {
-      id: 7,
-      nom: 'Roux',
-      prenom: 'Emma',
-      formule: 'Gold',
-      status: 'Approuvé',
-      previousMember: 'Non'
-    }
-  ];
 
   statusFilter: string = '';
   genderFilter: string = '';
   searchText: string = '';
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(this.applications);
+  constructor(private inscriptionService: InscriptionService) {
+    this.dataSource = new MatTableDataSource();
     this.dataSource.filterPredicate = this.createFilter();
   }
 
@@ -124,39 +58,66 @@ export class ApplicationsComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     
-    this.dataSource.sortingDataAccessor = (item: Application, property: string): string | number => {
+    this.dataSource.sortingDataAccessor = (item: any, property: string) => {
       switch(property) {
         case 'fullName':
-          return `${item.prenom} ${item.nom}`.toLowerCase();
+          return `${item.firstName} ${item.lastName}`.toLowerCase();
         case 'status':
-          const statusOrder = {
-            'En attente': 0,
-            'Approuvé': 1,
-            'Refusé': 2
-          };
-          return statusOrder[item.status as keyof typeof statusOrder];
+          return item.status;
         default: 
-          return item[property as keyof Application]?.toString() || '';
+          return item[property];
       }
     };
 
-    setTimeout(() => {
-      this.sort.sort({
-        id: 'status',
-        start: 'asc',
-        disableClear: true
+    this.loadApplications();
+  }
+
+  private loadApplications() {
+    this.inscriptionService.inscriptionGetAllInscriptions()
+      .subscribe({
+        next: (response) => {
+          const inscriptions = Array.isArray(response.data) ? response.data : [response.data];
+          
+          const transformedData = inscriptions
+            .filter((item): item is InscriptionResponse => item !== null)
+            .map(item => ({
+            ...item,
+            prenom: item.firstName,
+            nom: item.lastName,
+            formule: item.formula,
+            previousMember: item.isMemberBefore ? 'Oui' : 'Non'
+
+          }));
+          
+          this.dataSource.data = transformedData;
+        },
+        error: (error) => {
+          console.error('Error loading applications:', error);
+        }
       });
-    });
   }
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'En attente':
+      case 'PENDING':
         return 'status-pending';
-      case 'Approuvé':
+      case 'APPROVED':
         return 'status-approved';
-      case 'Refusé':
+      case 'REJECTED':
         return 'status-rejected';
+      default:
+        return '';
+    }
+  }
+
+  getStatusDesc(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'En attente';
+      case 'APPROVED':
+        return 'Approuvé';
+      case 'REJECTED':
+        return 'Refusé';
       default:
         return '';
     }
@@ -164,11 +125,11 @@ export class ApplicationsComponent implements AfterViewInit {
 
   getStatusIcon(status: string): string {
     switch (status) {
-      case 'En attente':
+      case 'PENDING':
         return 'hourglass_empty';
-      case 'Approuvé':
+      case 'APPROVED':
         return 'check_circle';
-      case 'Refusé':
+      case 'REJECTED':
         return 'cancel';
       default:
         return '';
@@ -197,7 +158,7 @@ export class ApplicationsComponent implements AfterViewInit {
         });
 
       const statusMatch = !filterObj.status || data.status === filterObj.status;
-      const genderMatch = !filterObj.gender || data.sexe === filterObj.gender;
+      const genderMatch = !filterObj.gender || data.sex === filterObj.gender;
 
       return searchMatch && statusMatch && genderMatch;
     };
