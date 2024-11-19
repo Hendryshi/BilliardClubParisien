@@ -33,7 +33,7 @@ import { Configuration }                                     from '../configurat
 import {
     UserServiceInterface
 } from './user.serviceInterface';
-
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -41,7 +41,7 @@ import {
 })
 export class UserService implements UserServiceInterface {
 
-    protected basePath = 'https://localhost:8001';
+    protected basePath: string = environment.apiUrl;
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

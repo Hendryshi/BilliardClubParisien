@@ -37,6 +37,8 @@ import { Configuration }                                     from '../configurat
 import {
     InscriptionServiceInterface
 } from './inscription.serviceInterface';
+import { environment } from '../../../environments/environment';
+
 
 
 
@@ -45,7 +47,7 @@ import {
 })
 export class InscriptionService implements InscriptionServiceInterface {
 
-    protected basePath = 'https://localhost:8001';
+    protected basePath: string = environment.apiUrl;
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
