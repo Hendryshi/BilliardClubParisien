@@ -20,14 +20,15 @@ html, body {
 
 /* Snackbar 样式 */
 .success-snackbar {
-  background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%) !important;
+  background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%) !important;
   color: white !important;
-  min-width: 500px !important;
+  width: 90% !important;
+  min-width: 280px !important;
   max-width: 800px !important;
-  padding: 24px 32px !important;
-  margin: 0 !important;
+  padding: 20px !important;
+  margin: 16px !important;
   border-radius: 24px !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 12px 48px rgba(25, 118, 210, 0.25) !important;
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
@@ -35,16 +36,18 @@ html, body {
   text-align: center !important;
   backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-sizing: border-box !important;
 }
 
 .success-snackbar .mat-simple-snackbar {
-  font-size: 20px !important;
+  font-size: clamp(16px, 4vw, 20px) !important;
   line-height: 1.6 !important;
   font-weight: 500 !important;
   text-align: center !important;
   justify-content: center !important;
-  gap: 20px !important;
+  gap: 16px !important;
   letter-spacing: 0.3px !important;
+  padding: 0 10px !important;
 }
 
 .success-snackbar .mat-simple-snackbar-action {
@@ -67,14 +70,15 @@ html, body {
 }
 
 .error-snackbar {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%) !important;
+  background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%) !important;
   color: white !important;
-  min-width: 500px !important;
+  width: 90% !important;
+  min-width: 280px !important;
   max-width: 800px !important;
-  padding: 24px 32px !important;
-  margin: 0 !important;
+  padding: 20px !important;
+  margin: 16px !important;
   border-radius: 24px !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 12px 48px rgba(211, 47, 47, 0.25) !important;
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
@@ -82,16 +86,18 @@ html, body {
   text-align: center !important;
   backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-sizing: border-box !important;
 }
 
 .error-snackbar .mat-simple-snackbar {
-  font-size: 20px !important;
+  font-size: clamp(16px, 4vw, 20px) !important;
   line-height: 1.6 !important;
   font-weight: 500 !important;
   text-align: center !important;
   justify-content: center !important;
-  gap: 20px !important;
+  gap: 16px !important;
   letter-spacing: 0.3px !important;
+  padding: 0 10px !important;
 }
 
 .error-snackbar .mat-simple-snackbar-action {
@@ -156,4 +162,42 @@ html, body {
 
 .mat-mdc-snack-bar-container .mdc-snackbar__label {
   padding: 0 !important;
+}
+
+/* 媒体查询适配移动端 */
+@media screen and (max-width: 600px) {
+  .success-snackbar,
+  .error-snackbar {
+    width: 90% !important;
+    margin: 24px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .success-snackbar .mat-simple-snackbar,
+  .error-snackbar .mat-simple-snackbar {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    padding: 0 12px !important;
+  }
+
+  .mat-mdc-snack-bar-container {
+    margin: 0 16px !important;
+  }
+}
+
+/* 针对特小屏幕的优化 */
+@media screen and (max-width: 320px) {
+  .success-snackbar,
+  .error-snackbar {
+    width: 95% !important;
+    margin: 16px !important;
+    padding: 16px !important;
+  }
+
+  .success-snackbar .mat-simple-snackbar,
+  .error-snackbar .mat-simple-snackbar {
+    font-size: 14px !important;
+    padding: 0 8px !important;
+  }
 }
