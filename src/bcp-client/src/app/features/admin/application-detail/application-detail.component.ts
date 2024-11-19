@@ -6,9 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { InscriptionService } from '../../../api/api/inscription.service';
 import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { firstValueFrom } from 'rxjs';
+import { UpdateInscriptionRequest } from '../../../api/model/updateInscriptionRequest';
 
 @Component({
   selector: 'app-application-detail',
@@ -19,7 +23,10 @@ import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    ConfirmDialogComponent
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
@@ -33,7 +40,8 @@ export class ApplicationDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private inscriptionService: InscriptionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -135,15 +143,141 @@ export class ApplicationDetailComponent implements OnInit {
     }
   }
 
-  approveApplication() {
-    if (this.application?.id) {
-      console.log('Approving application:', this.application.id);
+  async approveApplication() {
+    if (!this.application?.id) {
+      const errorConfig: MatSnackBarConfig = {
+        duration: 3000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      };
+
+      this.snackBar.open(
+        '❌ Erreur: ID de la demande manquant',
+        '',
+        errorConfig
+      );
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Confirmer l\'approbation',
+        message: 'Êtes-vous sûr de vouloir approuver cette demande ?',
+        confirmText: 'Approuver',
+        cancelText: 'Annuler'
+      }
+    });
+
+    const result = await firstValueFrom(dialogRef.afterClosed());
+    if (result) {
+      try {
+        const updateRequest: UpdateInscriptionRequest = {
+          data: {
+            status: 'APPROVED',
+            firstName: this.application?.firstName || '',
+            lastName: this.application?.lastName || '',
+            sex: this.application?.sex || '',
+            email: this.application?.email || ''
+          }
+        };
+
+        await firstValueFrom(
+          this.inscriptionService.inscriptionPatch(
+            this.application.id,
+            updateRequest
+          )
+        );
+        
+        this.router.navigate(['/admin/applications']);
+      } catch (error: any) {
+        console.error('Error approving application:', error);
+        
+        const errorConfig: MatSnackBarConfig = {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        };
+
+        let errorMessage = '❌ Une erreur est survenue lors de l\'approbation';
+      
+        this.snackBar.open(
+          errorMessage,
+          '',
+          errorConfig
+        );
+      }
     }
   }
 
-  rejectApplication() {
-    if (this.application?.id) {
-      console.log('Rejecting application:', this.application.id);
+  async rejectApplication() {
+    if (!this.application?.id) {
+      const errorConfig: MatSnackBarConfig = {
+        duration: 3000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      };
+
+      this.snackBar.open(
+        '❌ Erreur: ID de la demande manquant',
+        '',
+        errorConfig
+      );
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Confirmer le refus',
+        message: 'Êtes-vous sûr de vouloir refuser cette demande ?',
+        confirmText: 'Refuser',
+        cancelText: 'Annuler'
+      }
+    });
+
+    const result = await firstValueFrom(dialogRef.afterClosed());
+    if (result) {
+      try {
+        const updateRequest: UpdateInscriptionRequest = {
+          data: {
+            status: 'REJECTED',
+            firstName: this.application?.firstName || '',
+            lastName: this.application?.lastName || '',
+            sex: this.application?.sex || '',
+            email: this.application?.email || ''
+          }
+        };
+
+        await firstValueFrom(
+          this.inscriptionService.inscriptionPatch(
+            this.application.id,
+            updateRequest
+          )
+        );
+
+        this.router.navigate(['/admin/applications']);
+      } catch (error: any) {
+        console.error('Error rejecting application:', error);
+        
+        const errorConfig: MatSnackBarConfig = {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        };
+
+        let errorMessage = '❌ Une erreur est survenue lors du refus';
+        
+        this.snackBar.open(
+          errorMessage,
+          '',
+          errorConfig
+        );
+      }
     }
   }
 } 

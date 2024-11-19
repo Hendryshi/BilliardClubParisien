@@ -201,3 +201,19 @@ html, body {
     padding: 0 8px !important;
   }
 }
+
+/* 添加到全局样式文件 */
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+}
+
+.success-snackbar .mat-simple-snackbar-action,
+.error-snackbar .mat-simple-snackbar-action {
+  color: white;
+}
