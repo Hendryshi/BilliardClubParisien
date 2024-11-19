@@ -52,7 +52,7 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Statut</th>
               <td mat-cell *matCellDef="let application">
                 <span [class]="'status-badge ' + getStatusClass(application.status)">
-                  {{application.status}}
+                  {{getStatusDesc(application.status)}}
                 </span>
               </td>
             </ng-container>
