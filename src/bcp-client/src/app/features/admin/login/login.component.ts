@@ -42,11 +42,14 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-      if (this.authService.login(username, password)) {
-        this.router.navigate(['/admin/applications']);
-      } else {
-        console.error('Login failed');
-      }
+      this.authService.login(username, password).subscribe({
+        next: () => {
+          this.router.navigate(['/admin/applications']);
+        },
+        error: (error) => {
+          console.error('Login error:', error);
+        }
+      });
     }
   }
 } 
