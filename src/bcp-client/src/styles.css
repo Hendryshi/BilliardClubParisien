@@ -10,11 +10,150 @@ html, body {
   overflow: hidden;
   position: fixed;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  /*overscroll-behavior: none;*/
 }
 
 /* Material Typography */
 .mat-typography {
   font: 400 13px/20px Roboto, "Helvetica Neue", sans-serif;
   letter-spacing: normal;
+}
+
+/* Snackbar 样式 */
+.success-snackbar {
+  background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%) !important;
+  color: white !important;
+  min-width: 500px !important;
+  max-width: 800px !important;
+  padding: 24px 32px !important;
+  margin: 0 !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25) !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  text-align: center !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.success-snackbar .mat-simple-snackbar {
+  font-size: 20px !important;
+  line-height: 1.6 !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  letter-spacing: 0.3px !important;
+}
+
+.success-snackbar .mat-simple-snackbar-action {
+  color: white !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  margin: 0 0 0 24px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 14px !important;
+}
+
+.success-snackbar .mat-simple-snackbar-action:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.error-snackbar {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%) !important;
+  color: white !important;
+  min-width: 500px !important;
+  max-width: 800px !important;
+  padding: 24px 32px !important;
+  margin: 0 !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25) !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  text-align: center !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.error-snackbar .mat-simple-snackbar {
+  font-size: 20px !important;
+  line-height: 1.6 !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  letter-spacing: 0.3px !important;
+}
+
+.error-snackbar .mat-simple-snackbar-action {
+  color: white !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  margin: 0 0 0 24px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 14px !important;
+}
+
+.error-snackbar .mat-simple-snackbar-action:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Snackbar 容器和动画 */
+.mat-mdc-snack-bar-container {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-mdc-snack-bar-container.success-snackbar,
+.mat-mdc-snack-bar-container.error-snackbar {
+  --mdc-snackbar-container-color: transparent !important;
+  --mat-mdc-snack-bar-button-color: #fff !important;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Material Design 覆盖样式 */
+.mdc-snackbar__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  padding: 0 !important;
 }
