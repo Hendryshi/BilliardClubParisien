@@ -154,14 +154,14 @@ export class InscriptionComponent {
       };
 
       const successConfig: MatSnackBarConfig = {
-        duration: 5000,
+        duration: 3000,
         panelClass: ['success-snackbar'],
         horizontalPosition: 'center',
         verticalPosition: 'top'
       };
 
       const errorConfig: MatSnackBarConfig = {
-        duration: 8000,
+        duration: 3000,
         panelClass: ['error-snackbar'],
         horizontalPosition: 'center',
         verticalPosition: 'top'
@@ -175,7 +175,7 @@ export class InscriptionComponent {
               setTimeout(() => {
                 this.snackBar.open(
                   '🎉 Félicitations! Votre inscription a été enregistrée avec succès!', 
-                  'Fermer',
+                  '',
                   successConfig
                 );
               }, 100);
@@ -185,7 +185,7 @@ export class InscriptionComponent {
             console.error('Inscription error:', error);
             this.snackBar.open(
               '❌ Une erreur est survenue lors de l\'inscription. Veuillez réessayer ou contacter le support si le problème persiste.',
-              'Fermer',
+              '',
               errorConfig
             );
           }
