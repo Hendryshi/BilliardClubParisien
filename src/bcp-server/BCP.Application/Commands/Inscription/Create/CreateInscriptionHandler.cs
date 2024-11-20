@@ -28,11 +28,11 @@ namespace BCP.Application.Commands.Inscription.Create
 			_logger.Debug($"Entering command handler {GetType().Name}");
 			try
 			{
-				var entityExistResult = await _repo.GetByNameAsync(request.Data.FirstName, request.Data.LastName, cancellationToken);
-				if(entityExistResult.IsFailed) return entityExistResult.ToResult();
+				//var entityExistResult = await _repo.GetByNameAsync(request.Data.FirstName, request.Data.LastName, cancellationToken);
+				//if(entityExistResult.IsFailed) return entityExistResult.ToResult();
 
-				if(entityExistResult.Value != null)
-					return Result.Fail($"Inscription with name {request.Data.FirstName} {request.Data.LastName} already exists");
+				//if(entityExistResult.Value != null)
+				//	return Result.Fail($"Inscription with name {request.Data.FirstName} {request.Data.LastName} already exists");
 
 				//Map the command to domain entity
 				var entity = _mapper.Map<Domain.Entities.Inscription>(request.Data);

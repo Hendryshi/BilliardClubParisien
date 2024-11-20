@@ -13,11 +13,13 @@ namespace BCP.Application.Entity.Mapping
 			CreateMap<InscriptionCommand, Domain.Entities.Inscription>()
 				.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-			CreateMap<InscriptionImageCommand, Domain.Entities.InscriptionImage>();
+			CreateMap<InscriptionImageCommand, Domain.Entities.InscriptionImage>()
+				.ForMember(dest => dest.ImageData, opt => opt.MapFrom(src => src.ImageData != null ? Convert.FromBase64String(src.ImageData) : null));
 
 			CreateMap<Domain.Entities.User, Responses.User.UserResponse>();
 			CreateMap<Inscription, Responses.Inscription.InscriptionResponse>();
-			CreateMap<InscriptionImage, Responses.Inscription.InscriptionImageResponse>();
+			CreateMap<InscriptionImage, Responses.Inscription.InscriptionImageResponse>()
+				.ForMember(dest => dest.ImageData, opt => opt.MapFrom(src => src.ImageData != null ?  Convert.ToBase64String(src.ImageData) : null));
 		}
 	}
 }
