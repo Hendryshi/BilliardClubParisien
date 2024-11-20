@@ -1,7 +1,15 @@
 .applications-container {
-  padding: 24px 32px;
-  width: 90%;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 24px;
+}
+
+@media screen and (max-width: 599px) {
+  .applications-container {
+    padding: 16px;
+    width: 100%;
+  }
 }
 
 .header-section {
@@ -203,85 +211,6 @@ mat-card {
 /* 分页器样式 */
 mat-paginator {
   border-top: 1px solid #f0f0f0;
-}
-
-@media screen and (max-width: 599px) {
-  .applications-container {
-    padding: 12px;
-    width: 100%;
-  }
-
-  .filters-section {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
-  }
-
-  mat-form-field {
-    width: calc(50% - 4px);
-  }
-
-  .clear-filters-btn {
-    width: 100%;
-    height: 40px;
-    margin: 0;
-  }
-
-  .page-title {
-    font-size: 20px;
-  }
-
-  .page-subtitle {
-    font-size: 14px;
-  }
-
-  .mat-mdc-header-row {
-    height: 48px;
-  }
-
-  .mat-mdc-header-cell {
-    padding: 8px 4px;
-    font-size: 13px !important;
-    letter-spacing: 0.3px;
-  }
-
-  .mat-mdc-cell {
-    padding: 8px 4px;
-    font-size: 12px;
-  }
-
-  .mat-mdc-row {
-    height: 52px;
-  }
-
-  .status-badge,
-  .formule-badge {
-    padding: 4px 8px;
-    font-size: 11px;
-    letter-spacing: 0.2px;
-  }
-
-  .formule-icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .action-button {
-    width: 28px;
-    height: 28px;
-  }
-
-  .action-button mat-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-  }
-
-  .mat-column-previousMember .mat-mdc-header-cell {
-    padding-right: 16px;
-  }
 }
 
 .formule-badge {

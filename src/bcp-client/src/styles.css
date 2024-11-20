@@ -1,15 +1,46 @@
 /* Material主题 */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-/* 全局样式 */
-html, body {
+/* 重置基础样式 */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
   position: fixed;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* 移动端视口设置 */
+@viewport {
+  width: device-width;
+  initial-scale: 1;
+}
+
+/* 容器基础类 */
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+@media screen and (max-width: 599px) {
+  .page-container {
+    padding: 16px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .page-container {
+    padding: 12px;
+  }
 }
 
 /* Material Typography */
@@ -216,4 +247,36 @@ html, body {
 .success-snackbar .mat-simple-snackbar-action,
 .error-snackbar .mat-simple-snackbar-action {
   color: white;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 599px) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .applications-container,
+  .detail-container,
+  .inscription-container {
+    width: 100% !important;
+    padding: 16px !important;
+    margin: 0 !important;
+  }
+
+  mat-card {
+    margin: 0 !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* 特小屏幕的额外优化 */
+@media screen and (max-width: 320px) {
+  .applications-container,
+  .detail-container,
+  .inscription-container {
+    padding: 12px !important;
+  }
 }
