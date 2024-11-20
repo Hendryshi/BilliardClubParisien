@@ -31,6 +31,11 @@ interface Categorie {
   viewValue: string;
 }
 
+interface PhotoUpload {
+  file?: File;
+  preview?: string;
+}
+
 @Component({
   selector: 'app-inscription',
   standalone: true,
@@ -90,6 +95,11 @@ export class InscriptionComponent {
     { value: 'feminine', viewValue: 'Catégorie Féminine' },
     { value: 'regional', viewValue: 'Niveau Régional' },
     { value: 'national', viewValue: 'Niveau National' }
+  ];
+
+  photos: PhotoUpload[] = [
+    { file: undefined, preview: '' },
+    { file: undefined, preview: '' }
   ];
 
   constructor(
@@ -195,5 +205,44 @@ export class InscriptionComponent {
 
   toggleDetails() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  onFileSelected(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      
+      // 检查文件大小（5MB限制）
+      if (file.size > 5 * 1024 * 1024) {
+        this.snackBar.open('La taille du fichier ne doit pas dépasser 5MB', '', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+        return;
+      }
+
+      // 检查文件类型
+      if (!file.type.startsWith('image/')) {
+        this.snackBar.open('Seuls les fichiers image sont acceptés', '', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+        return;
+      }
+
+      // 创建预览
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.photos[index] = {
+          file: file,
+          preview: e.target?.result as string
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removePhoto(index: number) {
+    this.photos[index] = { file: undefined, preview: '' };
   }
 } 

@@ -524,4 +524,77 @@ button[type="submit"]:disabled {
     font-size: 13px;
     padding: 12px;
   }
+}
+
+.photos-section {
+  margin-top: 24px;
+}
+
+.photos-section h3 {
+  color: #1a237e;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.photo-upload-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.photo-upload {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-photo {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+}
+
+.upload-button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #666;
+}
+
+.photo-hint {
+  color: #666;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 599px) {
+  .photo-upload-container {
+    flex-direction: column;
+  }
+
+  .photo-upload {
+    width: 100%;
+    height: 180px;
+  }
 } 
