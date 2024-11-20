@@ -201,6 +201,27 @@
             </mat-form-field>
           </div>
 
+          <!-- Photos Section -->
+          <div class="photos-section">
+            <h3>Photos (optionnel - maximum 2 photos)</h3>
+            <div class="photo-upload-container">
+              <div class="photo-upload" *ngFor="let photo of photos; let i = index">
+                <div class="photo-preview" *ngIf="photo.preview">
+                  <img [src]="photo.preview" alt="Preview">
+                  <button mat-icon-button color="warn" class="remove-photo" (click)="removePhoto(i)">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+                <button mat-stroked-button class="upload-button" (click)="fileInput.click()" *ngIf="!photo.preview">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                  Ajouter une photo
+                </button>
+                <input type="file" #fileInput [accept]="'image/*'" (change)="onFileSelected($event, i)" style="display: none">
+              </div>
+            </div>
+            <p class="photo-hint">Format accepté: JPG, PNG - Taille maximum: 5MB par photo</p>
+          </div>
+
           <!-- Submit Button -->
           <div class="form-actions">
             <button mat-raised-button 
