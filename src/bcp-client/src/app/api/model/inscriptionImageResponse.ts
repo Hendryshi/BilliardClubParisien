@@ -9,10 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserCommand } from './userCommand';
 
 
-export interface CreateUserRequest { 
-    data: UserCommand;
+export interface InscriptionImageResponse { 
+    id: number;
+    idInscription: number;
+    imageData?: string | null;
 }
 

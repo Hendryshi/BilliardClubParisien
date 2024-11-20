@@ -7,6 +7,8 @@ export * from './createUserResponseData';
 export * from './getAllInscriptionsResponse';
 export * from './getInscriptionResponse';
 export * from './inscriptionCommand';
+export * from './inscriptionImageCommand';
+export * from './inscriptionImageResponse';
 export * from './inscriptionResponse';
 export * from './loginUserRequest';
 export * from './loginUserResponse';
