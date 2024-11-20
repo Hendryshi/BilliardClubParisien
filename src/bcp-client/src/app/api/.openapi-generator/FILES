@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/api.ts
@@ -20,6 +19,8 @@ model/createUserResponseData.ts
 model/getAllInscriptionsResponse.ts
 model/getInscriptionResponse.ts
 model/inscriptionCommand.ts
+model/inscriptionImageCommand.ts
+model/inscriptionImageResponse.ts
 model/inscriptionResponse.ts
 model/loginUserRequest.ts
 model/loginUserResponse.ts
@@ -28,8 +29,5 @@ model/updateInscriptionRequest.ts
 model/updateInscriptionResponse.ts
 model/userCommand.ts
 model/userResponse.ts
-ng-package.json
-package.json
 param.ts
-tsconfig.json
 variables.ts

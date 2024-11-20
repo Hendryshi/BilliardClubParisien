@@ -165,3 +165,18 @@ html, body {
     padding: 12px !important;
   }
 }
+
+.image-preview-dialog-container .mat-mdc-dialog-container {
+  padding: 0;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.image-preview-dialog-container .mat-mdc-dialog-surface {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.image-preview-backdrop {
+  background-color: rgba(0, 0, 0, 0.9);
+}

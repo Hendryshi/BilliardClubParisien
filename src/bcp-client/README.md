@@ -36,4 +36,7 @@
 ## 生成API客户端代码
 
 1. 确保swagger.json文件位于项目根目录
-2. 运行命令生成API代码：
+2. 运行命令生成API代码：npm run generate-api
+3. 修改 import { environment } from '../../../environments/environment';
+    protected basePath: string = environment.apiUrl;
+

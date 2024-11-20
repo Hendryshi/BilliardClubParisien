@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -7,12 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InscriptionService } from '../../../api/api/inscription.service';
 import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { UpdateInscriptionRequest } from '../../../api/model/updateInscriptionRequest';
+import { ImagePreviewDialogComponent } from '../../../shared/components/image-preview-dialog/image-preview-dialog.component';
 
 @Component({
   selector: 'app-application-detail',
@@ -26,7 +27,8 @@ import { UpdateInscriptionRequest } from '../../../api/model/updateInscriptionRe
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ImagePreviewDialogComponent
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
@@ -279,5 +281,17 @@ export class ApplicationDetailComponent implements OnInit {
         );
       }
     }
+  }
+
+  openImagePreview(image: any) {
+    this.dialog.open(ImagePreviewDialogComponent, {
+      data: {
+        imageUrl: 'data:image/jpeg;base64,' + image.imageData
+      },
+      maxWidth: '95vw',
+      maxHeight: '95vh',
+      panelClass: 'image-preview-dialog-container',
+      backdropClass: 'image-preview-backdrop'
+    });
   }
 } 

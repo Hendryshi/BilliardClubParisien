@@ -3,7 +3,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "BilliardClubParisien.Api",
-    "version": "0.0.1"
+    "version": "0.2.0"
   },
   "servers": [
     {
@@ -221,6 +221,9 @@
       "InscriptionResponse": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -279,6 +282,35 @@
           "dtUpdate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "inscriptionImages": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InscriptionImageResponse"
+            }
+          }
+        }
+      },
+      "InscriptionImageResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "idInscription"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idInscription": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageData": {
+            "type": "string",
             "nullable": true
           }
         }
@@ -360,6 +392,31 @@
             "type": "string",
             "minLength": 1,
             "nullable": false
+          },
+          "inscriptionImages": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InscriptionImageCommand"
+            }
+          }
+        }
+      },
+      "InscriptionImageCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idInscription": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageData": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
