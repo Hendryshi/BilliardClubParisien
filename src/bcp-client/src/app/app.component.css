@@ -9,15 +9,22 @@
 }
 
 .toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
+  gap: 16px;
+}
+
+.logo {
+  margin-right: auto;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .menu-button {
@@ -99,7 +106,7 @@ mat-nav-list a:hover mat-icon {
 
 @media screen and (max-width: 599px) {
   .toolbar {
-    padding: 0 16px;
+    padding: 0 8px;
   }
 
   .sidenav-container {
@@ -130,5 +137,9 @@ mat-nav-list a:hover mat-icon {
 
   .nav-label {
     font-size: 13px;
+  }
+
+  .logo {
+    font-size: 16px;
   }
 }
