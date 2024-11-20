@@ -42,7 +42,7 @@
 }
 
 mat-form-field {
-  width: 180px;
+  width: 240px;
 }
 
 .clear-filters-btn {
@@ -270,4 +270,92 @@ mat-paginator {
 /* Previous Member 列样式 */
 .mat-column-previousMember {
   font-weight: 500;
+}
+
+/* 移动端样式 */
+@media screen and (max-width: 599px) {
+  .applications-container {
+    padding: 16px;
+    width: 100%;
+  }
+
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .clear-filters-btn {
+    display: none;
+  }
+
+  /* 优化表格样式 */
+  .mat-mdc-header-cell {
+    padding: 8px 4px;  /* 减小内边距 */
+    font-size: 12px !important;  /* 减小字体 */
+  }
+
+  .mat-mdc-cell {
+    padding: 8px 4px;  /* 减小内边距 */
+    font-size: 12px;   /* 减小字体 */
+  }
+
+  /* 调整列宽度 */
+  .mat-column-fullName {
+    min-width: 100px;
+  }
+
+  .mat-column-status {
+    min-width: 70px;
+  }
+
+  .mat-column-formule {
+    min-width: 70px;
+  }
+
+  .mat-column-previousMember {
+    min-width: 60px;
+  }
+
+  .mat-column-actions {
+    width: 32px;
+    min-width: 32px;
+  }
+
+  /* 优化操作按钮 */
+  .action-button {
+    width: 28px;
+    height: 28px;
+  }
+
+  .action-button mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* 优化状态标签 */
+  .status-badge {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  /* 优化formule标签 */
+  .formule-badge {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .formule-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
 } 

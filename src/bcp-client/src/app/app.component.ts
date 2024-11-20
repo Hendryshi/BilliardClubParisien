@@ -70,7 +70,7 @@ export class AppComponent {
 
   handleMenuClick(): void {
     if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
-      this.sidenav.close();
+      this.sidenav.close(); 
     }
   }
 
