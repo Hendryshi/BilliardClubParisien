@@ -49,187 +49,72 @@ html, body {
   letter-spacing: normal;
 }
 
-/* Snackbar 样式 */
-.success-snackbar {
-  background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%) !important;
-  color: white !important;
-  width: 90% !important;
-  min-width: 280px !important;
-  max-width: 800px !important;
-  padding: 20px !important;
-  margin: 16px !important;
-  border-radius: 24px !important;
-  box-shadow: 0 12px 48px rgba(25, 118, 210, 0.25) !important;
-  position: fixed !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  text-align: center !important;
-  backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-sizing: border-box !important;
-}
-
-.success-snackbar .mat-simple-snackbar {
-  font-size: clamp(16px, 4vw, 20px) !important;
-  line-height: 1.6 !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  justify-content: center !important;
-  gap: 16px !important;
-  letter-spacing: 0.3px !important;
-  padding: 0 10px !important;
-}
-
-.success-snackbar .mat-simple-snackbar-action {
-  color: white !important;
-  font-weight: 600 !important;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 12px 24px !important;
-  border-radius: 12px !important;
-  margin: 0 0 0 24px !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  font-size: 14px !important;
-}
-
-.success-snackbar .mat-simple-snackbar-action:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
-}
-
-.error-snackbar {
-  background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%) !important;
-  color: white !important;
-  width: 90% !important;
-  min-width: 280px !important;
-  max-width: 800px !important;
-  padding: 20px !important;
-  margin: 16px !important;
-  border-radius: 24px !important;
-  box-shadow: 0 12px 48px rgba(211, 47, 47, 0.25) !important;
-  position: fixed !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  text-align: center !important;
-  backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-sizing: border-box !important;
-}
-
-.error-snackbar .mat-simple-snackbar {
-  font-size: clamp(16px, 4vw, 20px) !important;
-  line-height: 1.6 !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  justify-content: center !important;
-  gap: 16px !important;
-  letter-spacing: 0.3px !important;
-  padding: 0 10px !important;
-}
-
-.error-snackbar .mat-simple-snackbar-action {
-  color: white !important;
-  font-weight: 600 !important;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 12px 24px !important;
-  border-radius: 12px !important;
-  margin: 0 0 0 24px !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  font-size: 14px !important;
-}
-
-.error-snackbar .mat-simple-snackbar-action:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Snackbar 容器和动画 */
+/* Snackbar 容器样式 */
 .mat-mdc-snack-bar-container {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
-  animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.mat-mdc-snack-bar-container.success-snackbar,
-.mat-mdc-snack-bar-container.error-snackbar {
-  --mdc-snackbar-container-color: transparent !important;
-  --mat-mdc-snack-bar-button-color: #fff !important;
+/* Snackbar 样式 */
+.success-snackbar {
+  background: #2e7d32 !important;
+  color: white !important;
+  width: 90% !important;
+  min-width: 280px !important;
+  max-width: 800px !important;
+  padding: 20px !important;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
 }
 
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+.error-snackbar {
+  background: #d32f2f !important;
+  color: white !important;
+  width: 90% !important;
+  min-width: 280px !important;
+  max-width: 800px !important;
+  padding: 20px !important;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
 }
 
-/* Material Design 覆盖样式 */
-.mdc-snackbar__surface {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-.mat-mdc-snack-bar-container .mdc-snackbar__surface {
-  padding: 0 !important;
-  background: transparent !important;
-}
-
-.mat-mdc-snack-bar-container .mdc-snackbar__label {
-  padding: 0 !important;
-}
-
-/* 媒体查询适配移动端 */
-@media screen and (max-width: 600px) {
+/* 移动端样式优化 */
+@media screen and (max-width: 599px) {
   .success-snackbar,
   .error-snackbar {
-    width: 90% !important;
-    margin: 24px !important;
-    padding: 20px !important;
-    border-radius: 20px !important;
-  }
-
-  .success-snackbar .mat-simple-snackbar,
-  .error-snackbar .mat-simple-snackbar {
-    font-size: 16px !important;
-    line-height: 1.4 !important;
-    padding: 0 12px !important;
-  }
-
-  .mat-mdc-snack-bar-container {
-    margin: 0 16px !important;
-  }
-}
-
-/* 针对特小屏幕的优化 */
-@media screen and (max-width: 320px) {
-  .success-snackbar,
-  .error-snackbar {
-    width: 95% !important;
-    margin: 16px !important;
+    width: calc(100% - 32px) !important;
+    min-width: unset !important;
     padding: 16px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
   }
 
   .success-snackbar .mat-simple-snackbar,
   .error-snackbar .mat-simple-snackbar {
     font-size: 14px !important;
-    padding: 0 8px !important;
+    line-height: 1.4 !important;
+  }
+
+  .mat-mdc-snack-bar-container {
+    margin: 0 !important;
+  }
+}
+
+/* 特小屏幕的额外优化 */
+@media screen and (max-width: 320px) {
+  .success-snackbar,
+  .error-snackbar {
+    width: calc(100% - 24px) !important;
+    padding: 12px !important;
+    font-size: 13px !important;
   }
 }
 
