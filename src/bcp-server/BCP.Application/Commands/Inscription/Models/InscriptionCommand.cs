@@ -1,4 +1,5 @@
 using BCP.Domain.Definitions;
+using BCP.Domain.Entities;
 
 namespace BCP.Application.Commands.Inscription.Models
 {
@@ -16,5 +17,13 @@ namespace BCP.Application.Commands.Inscription.Models
 		public List<string> CompetitionCats { get; set; }
 		public string Motivation { get; set; }
 		public string Status { get; set; }
+		public List<InscriptionImageCommand> InscriptionImages { get; set; }
+	}
+
+	public class InscriptionImageCommand
+	{
+		public int Id { get; set; }
+		public int IdInscription { get; set; }
+		public byte[] ImageData { get; set; }
 	}
 }

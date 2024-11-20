@@ -13,9 +13,11 @@ namespace BCP.Application.Entity.Mapping
 			CreateMap<InscriptionCommand, Domain.Entities.Inscription>()
 				.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+			CreateMap<InscriptionImageCommand, Domain.Entities.InscriptionImage>();
+
 			CreateMap<Domain.Entities.User, Responses.User.UserResponse>();
 			CreateMap<Inscription, Responses.Inscription.InscriptionResponse>();
-
+			CreateMap<InscriptionImage, Responses.Inscription.InscriptionImageResponse>();
 		}
 	}
 }

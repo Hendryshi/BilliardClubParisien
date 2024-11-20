@@ -16,6 +16,9 @@ namespace BCP.Infrastructure.Persistence
 
 		public DbSet<Inscription> Inscriptions {  get; set; }
 
+		public DbSet<InscriptionImage> InscriptionImages { get; set; }
+
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.HasDefaultSchema("dbo");
@@ -47,6 +50,14 @@ namespace BCP.Infrastructure.Persistence
 				m.Property(x => x.Status).IsRequired();
 				m.Property(x => x.DtCreate);
 				m.Property(x => x.DtUpdate);
+			});
+
+			modelBuilder.Entity<InscriptionImage>(m =>
+			{
+				m.HasKey(x => x.Id);
+				m.Property(x => x.IdInscription).IsRequired();
+				m.Property(x => x.ImageData).IsRequired();
+				m.HasOne<Inscription>().WithMany(x => x.InscriptionImages).HasForeignKey(x => x.IdInscription).OnDelete(DeleteBehavior.Cascade);
 			});
 		}
 	}

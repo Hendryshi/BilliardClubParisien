@@ -18,5 +18,6 @@ namespace BCP.Domain.Entities
 		public string Status { get; set; }
 		public DateTime? DtCreate { get; set; }
 		public DateTime? DtUpdate { get; set; }
+		public List<InscriptionImage> InscriptionImages { get; set; }
 	}
 }
