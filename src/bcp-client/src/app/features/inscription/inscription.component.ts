@@ -15,6 +15,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { InscriptionService } from '../../api/api/inscription.service';
 import { InscriptionCommand } from '../../api/model/inscriptionCommand';
+import { InscriptionImageCommand } from '../../api/model/inscriptionImageCommand';
 
 interface Genre {
   value: string;
@@ -144,11 +145,18 @@ export class InscriptionComponent {
   onSubmit() {
     if (this.inscriptionForm.valid) {
       const formValue = this.inscriptionForm.value;
-      
+
       const selectedCategories = Object.entries(formValue.categories || {})
         .filter(([_, selected]) => selected)
         .map(([category]) => category.toUpperCase());
-      
+
+      // 准备图片数据
+      const images: InscriptionImageCommand[] = this.photos
+        .filter(photo => photo.preview) // 只处理有预览的照片
+        .map(photo => ({
+          imageData: photo.preview?.split(',')[1] || null // 移除 data:image/xxx;base64, 前缀
+        }));
+
       const inscriptionCommand: InscriptionCommand = {
         firstName: formValue.prenom,
         lastName: formValue.nom,
@@ -160,7 +168,8 @@ export class InscriptionComponent {
         formula: formValue.formule,
         joinCompetition: formValue.competition === 'oui',
         competitionCats: selectedCategories,
-        motivation: formValue.motivation || ''
+        motivation: formValue.motivation || '',
+        inscriptionImages: images
       };
 
       const successConfig: MatSnackBarConfig = {
@@ -177,14 +186,18 @@ export class InscriptionComponent {
         verticalPosition: 'top'
       };
 
-      this.inscriptionService.inscriptionCreate({ data: inscriptionCommand })
+      this.inscriptionService.inscriptionCreate({data: inscriptionCommand})
         .subscribe({
           next: () => {
             this.inscriptionForm.reset();
+            this.photos = [
+              { file: undefined, preview: '' },
+              { file: undefined, preview: '' }
+            ];
             this.router.navigate(['/home']).then(() => {
               setTimeout(() => {
                 this.snackBar.open(
-                  '🎉 Félicitations! Votre inscription a été enregistrée avec succès!', 
+                  '🎉 Félicitations! Votre inscription a été enregistrée avec succès!',
                   '',
                   successConfig
                 );
@@ -211,7 +224,7 @@ export class InscriptionComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      
+
       // 检查文件大小（5MB限制）
       if (file.size > 5 * 1024 * 1024) {
         this.snackBar.open('La taille du fichier ne doit pas dépasser 5MB', '', {
