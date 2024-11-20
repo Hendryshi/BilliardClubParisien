@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.your-domain.com'
+  apiUrl: 'https://bcp-api.hendryshi.com'
 }; 
