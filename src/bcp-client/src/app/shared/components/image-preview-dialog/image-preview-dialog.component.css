@@ -1,0 +1,28 @@
+.image-preview-dialog {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+img {
+  max-width: 100%;
+  max-height: calc(90vh - 48px);
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+} 

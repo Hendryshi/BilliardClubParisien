@@ -103,6 +103,22 @@
             <p class="motivation-text">{{application?.motivation}}</p>
           </div>
         </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section" *ngIf="application?.inscriptionImages?.length">
+          <div class="section-header">
+            <mat-icon class="section-icon">photo_library</mat-icon>
+            <h3>Photos</h3>
+          </div>
+          <div class="images-container">
+            <div class="image-item" *ngFor="let image of application?.inscriptionImages">
+              <img [src]="'data:image/jpeg;base64,' + image.imageData" 
+                   alt="Photo du candidat"
+                   (click)="openImagePreview(image)">
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
