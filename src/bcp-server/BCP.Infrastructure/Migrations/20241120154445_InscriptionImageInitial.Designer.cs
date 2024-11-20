@@ -4,6 +4,7 @@ using BCP.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BCP.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120154445_InscriptionImageInitial")]
+    partial class InscriptionImageInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,15 +141,10 @@ namespace BCP.Infrastructure.Migrations
             modelBuilder.Entity("BCP.Domain.Entities.InscriptionImage", b =>
                 {
                     b.HasOne("BCP.Domain.Entities.Inscription", null)
-                        .WithMany("InscriptionImages")
+                        .WithMany()
                         .HasForeignKey("IdInscription")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BCP.Domain.Entities.Inscription", b =>
-                {
-                    b.Navigation("InscriptionImages");
                 });
 #pragma warning restore 612, 618
         }

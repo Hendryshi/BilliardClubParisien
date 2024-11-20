@@ -28,6 +28,14 @@ namespace BCP.Infrastructure.Repositories
 				oobject.DtCreate = DateTime.Now;
 				oobject.DtUpdate = DateTime.Now;
 				var response = await _dbContext.AddAsync(oobject);
+
+				if(oobject.InscriptionImages != null && oobject.InscriptionImages.Count > 0)
+					foreach(var image in oobject.InscriptionImages)
+					{
+						image.IdInscription = response.Entity.Id;
+						await _dbContext.AddAsync(image);
+					}
+
 				return Result.Ok(response.Entity);
 			}
 			catch(Exception e)
@@ -41,7 +49,7 @@ namespace BCP.Infrastructure.Repositories
 			try
 			{
 				var response = await _dbContext.Inscriptions
-					.AsNoTracking()
+					.AsNoTracking().Include(t => t.InscriptionImages)
 					.FirstOrDefaultAsync(u => u.Id == id);
 
 				if(response == null) 
@@ -59,7 +67,7 @@ namespace BCP.Infrastructure.Repositories
 		{
 			try
 			{
-				return await _dbContext.Inscriptions.AsNoTracking().ToListAsync();
+				return await _dbContext.Inscriptions.Include(t => t.InscriptionImages).AsNoTracking().ToListAsync();
 			}
 			catch(Exception e)
 			{
@@ -98,6 +106,53 @@ namespace BCP.Infrastructure.Repositories
 			catch (Exception ex)
 			{
 				return Result.Fail(new Error(ex.Message));
+			}
+		}
+		#endregion
+
+		#region InscriptionImage CRUD
+		public async Task<Result<InscriptionImage>> AddImageAsync(InscriptionImage oobject)
+		{
+			try
+			{
+				ArgumentNullException.ThrowIfNull(oobject);
+				var response = await _dbContext.AddAsync(oobject);
+				return Result.Ok(response.Entity);
+			}
+			catch(Exception e)
+			{
+				return ResultHelper.MapToResult(e);
+			}
+		}
+
+		public async Task<Result<InscriptionImage>> GetImageAsync(int id)
+		{
+			try
+			{
+				var response = await _dbContext.InscriptionImages
+					.AsNoTracking()
+					.FirstOrDefaultAsync(u => u.Id == id);
+
+				if(response == null)
+					throw new NotFoundException($"The inscription image of id {id} does not exist.");
+
+				return Result.Ok(response);
+			}
+			catch(Exception e)
+			{
+				return ResultHelper.MapToResult(e);
+			}
+		}
+
+		public async Task<Result<List<InscriptionImage>>> GetAllImagesByIdInscriptionAsync(int idInscription)
+		{
+			try
+			{
+				return await _dbContext.InscriptionImages.AsNoTracking().Where(t => t.IdInscription == idInscription).ToListAsync();
+			}
+			catch(Exception e)
+			{
+				return ResultHelper.MapToResult(e);
 			}
 		}
 		#endregion
