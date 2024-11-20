@@ -24,6 +24,6 @@ namespace BCP.Application.Commands.Inscription.Models
 	{
 		public int Id { get; set; }
 		public int IdInscription { get; set; }
-		public byte[] ImageData { get; set; }
+		public string ImageData { get; set; }
 	}
 }
