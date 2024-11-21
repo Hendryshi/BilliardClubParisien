@@ -47,6 +47,25 @@
 
         <div class="detail-section">
           <div class="section-header">
+            <mat-icon class="section-icon">schedule</mat-icon>
+            <h3>Dates</h3>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">Date de création</span>
+              <span class="value">{{application?.dtCreate | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Dernière mise à jour</span>
+              <span class="value">{{application?.dtUpdate | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="section-header">
             <mat-icon class="section-icon">card_membership</mat-icon>
             <h3>Informations d'Adhésion</h3>
           </div>

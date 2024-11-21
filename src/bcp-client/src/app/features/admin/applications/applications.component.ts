@@ -81,13 +81,20 @@ export class ApplicationsComponent implements AfterViewInit {
           const transformedData = inscriptions
             .filter((item): item is InscriptionResponse => item !== null)
             .map(item => ({
-            ...item,
-            prenom: item.firstName,
-            nom: item.lastName,
-            formule: item.formula,
-            previousMember: item.isMemberBefore ? 'Oui' : 'Non'
-
-          }));
+              ...item,
+              prenom: item.firstName,
+              nom: item.lastName,
+              formule: item.formula,
+              previousMember: item.isMemberBefore ? 'Oui' : 'Non'
+            }))
+            .sort((a, b) => {
+              if (a.status === 'PENDING' && b.status !== 'PENDING') return -1;
+              if (a.status !== 'PENDING' && b.status === 'PENDING') return 1;
+              
+              const dateA = new Date(a.dtCreate || '').getTime();
+              const dateB = new Date(b.dtCreate || '').getTime();
+              return dateB - dateA;
+            });
           
           this.dataSource.data = transformedData;
         },
@@ -157,10 +164,10 @@ export class ApplicationsComponent implements AfterViewInit {
           return false;
         });
 
-      const statusMatch = !filterObj.status || data.status === filterObj.status;
-      const genderMatch = !filterObj.gender || data.sex === filterObj.gender;
+      const statusMatch = !filterObj.status || 
+        this.getStatusDesc(data.status) === filterObj.status;
 
-      return searchMatch && statusMatch && genderMatch;
+      return searchMatch && statusMatch;
     };
   }
 

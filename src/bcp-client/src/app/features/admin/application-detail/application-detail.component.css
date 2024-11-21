@@ -413,4 +413,18 @@ mat-chip {
     width: 100px;
     height: 100px;
   }
+}
+
+.creation-date {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 599px) {
+  .creation-date {
+    font-size: 13px;
+    margin-top: 4px;
+  }
 } 
