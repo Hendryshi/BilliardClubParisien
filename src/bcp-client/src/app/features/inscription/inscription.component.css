@@ -158,6 +158,10 @@ button[type="submit"] {
   color: white;
   box-shadow: 0 4px 12px rgba(26, 35, 126, 0.2);
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 button[type="submit"]:hover:not([disabled]) {
@@ -660,5 +664,39 @@ button[type="submit"]:disabled {
 
   .info-text {
     font-size: 13px;
+  }
+}
+
+/* 加载动画容器 */
+.spinner {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+}
+
+/* 加载动画颜色覆盖 */
+::ng-deep .mat-mdc-progress-spinner circle {
+  stroke: #ffffff !important;
+}
+
+/* 按钮文字容器 */
+button[type="submit"] span {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+button[type="submit"].submitting span {
+  opacity: 0;
+}
+
+@media screen and (max-width: 599px) {
+  button[type="submit"] {
+    width: 100%;
+    min-width: unset;
+    height: 44px;
+    font-size: 15px;
+    padding: 0 24px;
   }
 } 

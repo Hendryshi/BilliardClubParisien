@@ -16,6 +16,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { InscriptionService } from '../../api/api/inscription.service';
 import { InscriptionCommand } from '../../api/model/inscriptionCommand';
 import { InscriptionImageCommand } from '../../api/model/inscriptionImageCommand';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface Genre {
   value: string;
@@ -51,7 +52,8 @@ interface PhotoUpload {
     MatRadioModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './inscription.component.html',
   styleUrls: ['./inscription.component.css'],
@@ -79,6 +81,7 @@ export class InscriptionComponent {
   maxLength = 1000;
   isFormulesExpanded = false;
   isExpanded = false;
+  isSubmitting = false;
 
   genres: Genre[] = [
     { value: 'M', viewValue: 'Masculin' },
@@ -143,7 +146,8 @@ export class InscriptionComponent {
   }
 
   onSubmit() {
-    if (this.inscriptionForm.valid) {
+    if (this.inscriptionForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       const formValue = this.inscriptionForm.value;
 
       const selectedCategories = Object.entries(formValue.categories || {})
@@ -203,6 +207,7 @@ export class InscriptionComponent {
                 );
               }, 100);
             });
+            this.isSubmitting = false;
           },
           error: (error) => {
             console.error('Inscription error:', error);
@@ -211,6 +216,7 @@ export class InscriptionComponent {
               '',
               errorConfig
             );
+            this.isSubmitting = false;
           }
         });
     }
