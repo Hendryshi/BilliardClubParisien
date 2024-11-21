@@ -1,4 +1,9 @@
 <div class="detail-container">
+  <div class="loading-overlay" *ngIf="isUpdating">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Mise à jour en cours...</span>
+  </div>
+
   <div class="loading-overlay" *ngIf="isLoading">
     <mat-spinner diameter="40"></mat-spinner>
     <span>Chargement en cours...</span>

@@ -28,9 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule,
-    ConfirmDialogComponent,
-    ImagePreviewDialogComponent
+    MatProgressSpinnerModule
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
@@ -39,6 +37,7 @@ export class ApplicationDetailComponent implements OnInit {
   application: InscriptionResponse | null = null;
   isLoading = true;
   error: string | null = null;
+  isUpdating = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -148,6 +147,8 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   async approveApplication() {
+    if (this.isUpdating) return;
+    
     if (!this.application?.id) {
       const errorConfig: MatSnackBarConfig = {
         duration: 3000,
@@ -176,6 +177,7 @@ export class ApplicationDetailComponent implements OnInit {
 
     const result = await firstValueFrom(dialogRef.afterClosed());
     if (result) {
+      this.isUpdating = true;
       try {
         const updateRequest: UpdateInscriptionRequest = {
           data: {
@@ -212,10 +214,9 @@ export class ApplicationDetailComponent implements OnInit {
                 panelClass: ['error-snackbar']
               }
             );
+            this.isUpdating = false;
           }
         });
-        
-        this.router.navigate(['/admin/applications']);
       } catch (error: any) {
         console.error('Error approving application:', error);
         
@@ -233,11 +234,14 @@ export class ApplicationDetailComponent implements OnInit {
           '',
           errorConfig
         );
+        this.isUpdating = false;
       }
     }
   }
 
   async rejectApplication() {
+    if (this.isUpdating) return;
+    
     if (!this.application?.id) {
       const errorConfig: MatSnackBarConfig = {
         duration: 3000,
@@ -266,6 +270,7 @@ export class ApplicationDetailComponent implements OnInit {
 
     const result = await firstValueFrom(dialogRef.afterClosed());
     if (result) {
+      this.isUpdating = true;
       try {
         const updateRequest: UpdateInscriptionRequest = {
           data: {
@@ -302,6 +307,7 @@ export class ApplicationDetailComponent implements OnInit {
                 panelClass: ['error-snackbar']
               }
             );
+            this.isUpdating = false;
           }
         });
       } catch (error: any) {
@@ -321,6 +327,7 @@ export class ApplicationDetailComponent implements OnInit {
           '',
           errorConfig
         );
+        this.isUpdating = false;
       }
     }
   }
