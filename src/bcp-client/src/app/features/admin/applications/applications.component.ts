@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { InscriptionService } from '../../../api/api/inscription.service';
 import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-applications',
@@ -33,7 +34,8 @@ import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.css']
@@ -41,6 +43,7 @@ import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
 export class ApplicationsComponent implements AfterViewInit {
   displayedColumns: string[] = ['fullName', 'status', 'formule', 'previousMember', 'actions'];
   dataSource: MatTableDataSource<any>;
+  isLoading = false;
   
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -73,6 +76,7 @@ export class ApplicationsComponent implements AfterViewInit {
   }
 
   private loadApplications() {
+    this.isLoading = true;
     this.inscriptionService.inscriptionGetAllInscriptions()
       .subscribe({
         next: (response) => {
@@ -97,9 +101,11 @@ export class ApplicationsComponent implements AfterViewInit {
             });
           
           this.dataSource.data = transformedData;
+          this.isLoading = false;
         },
         error: (error) => {
           console.error('Error loading applications:', error);
+          this.isLoading = false;
         }
       });
   }

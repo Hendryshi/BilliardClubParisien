@@ -427,4 +427,25 @@ mat-chip {
     font-size: 13px;
     margin-top: 4px;
   }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 1000;
+}
+
+.loading-overlay span {
+  color: #1a237e;
+  font-size: 14px;
+  font-weight: 500;
 } 

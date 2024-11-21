@@ -1,4 +1,9 @@
 <div class="detail-container">
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Chargement en cours...</span>
+  </div>
+
   <div class="header-section">
     <h1 class="page-title">Détail de la Demande d'Inscription</h1>
   </div>

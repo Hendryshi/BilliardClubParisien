@@ -99,6 +99,11 @@
             aria-label="Sélectionner la page">
           </mat-paginator>
         </div>
+
+        <div class="loading-overlay" *ngIf="isLoading">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>Chargement en cours...</span>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

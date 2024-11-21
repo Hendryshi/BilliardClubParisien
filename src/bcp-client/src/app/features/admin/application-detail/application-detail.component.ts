@@ -14,6 +14,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { firstValueFrom } from 'rxjs';
 import { UpdateInscriptionRequest } from '../../../api/model/updateInscriptionRequest';
 import { ImagePreviewDialogComponent } from '../../../shared/components/image-preview-dialog/image-preview-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-application-detail',
@@ -28,7 +29,8 @@ import { ImagePreviewDialogComponent } from '../../../shared/components/image-pr
     MatDialogModule,
     MatSnackBarModule,
     ConfirmDialogComponent,
-    ImagePreviewDialogComponent
+    ImagePreviewDialogComponent,
+    MatProgressSpinnerModule
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
