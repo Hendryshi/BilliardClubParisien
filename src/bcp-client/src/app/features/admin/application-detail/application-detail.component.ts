@@ -28,9 +28,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     ConfirmDialogComponent,
-    ImagePreviewDialogComponent,
-    MatProgressSpinnerModule
+    ImagePreviewDialogComponent
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
@@ -187,12 +187,33 @@ export class ApplicationDetailComponent implements OnInit {
           }
         };
 
-        await firstValueFrom(
-          this.inscriptionService.inscriptionPatch(
-            this.application.id,
-            updateRequest
-          )
-        );
+        this.inscriptionService.inscriptionPatch(
+          this.application.id,
+          updateRequest
+        ).subscribe({
+          next: () => {
+            this.snackBar.open(
+              '✅ Demande approuvée - Un email de confirmation a été envoyé au candidat', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              }
+            );
+            this.router.navigate(['/admin/applications']);
+          },
+          error: (error: any) => {
+            console.error('Error approving application:', error);
+            this.snackBar.open(
+              'Une erreur est survenue lors de l\'approbation', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['error-snackbar']
+              }
+            );
+          }
+        });
         
         this.router.navigate(['/admin/applications']);
       } catch (error: any) {
@@ -256,14 +277,33 @@ export class ApplicationDetailComponent implements OnInit {
           }
         };
 
-        await firstValueFrom(
-          this.inscriptionService.inscriptionPatch(
-            this.application.id,
-            updateRequest
-          )
-        );
-
-        this.router.navigate(['/admin/applications']);
+        this.inscriptionService.inscriptionPatch(
+          this.application.id,
+          updateRequest
+        ).subscribe({
+          next: () => {
+            this.snackBar.open(
+              '❌ Demande refusée - Un email de notification a été envoyé au candidat', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              }
+            );
+            this.router.navigate(['/admin/applications']);
+          },
+          error: (error: any) => {
+            console.error('Error rejecting application:', error);
+            this.snackBar.open(
+              'Une erreur est survenue lors du refus', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['error-snackbar']
+              }
+            );
+          }
+        });
       } catch (error: any) {
         console.error('Error rejecting application:', error);
         
