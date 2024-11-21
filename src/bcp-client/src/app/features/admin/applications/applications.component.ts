@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { InscriptionService } from '../../../api/api/inscription.service';
 import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-applications',
@@ -33,7 +34,8 @@ import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.css']
@@ -41,6 +43,7 @@ import { InscriptionResponse } from '../../../api/model/inscriptionResponse';
 export class ApplicationsComponent implements AfterViewInit {
   displayedColumns: string[] = ['fullName', 'status', 'formule', 'previousMember', 'actions'];
   dataSource: MatTableDataSource<any>;
+  isLoading = false;
   
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -73,6 +76,7 @@ export class ApplicationsComponent implements AfterViewInit {
   }
 
   private loadApplications() {
+    this.isLoading = true;
     this.inscriptionService.inscriptionGetAllInscriptions()
       .subscribe({
         next: (response) => {
@@ -81,18 +85,27 @@ export class ApplicationsComponent implements AfterViewInit {
           const transformedData = inscriptions
             .filter((item): item is InscriptionResponse => item !== null)
             .map(item => ({
-            ...item,
-            prenom: item.firstName,
-            nom: item.lastName,
-            formule: item.formula,
-            previousMember: item.isMemberBefore ? 'Oui' : 'Non'
-
-          }));
+              ...item,
+              prenom: item.firstName,
+              nom: item.lastName,
+              formule: item.formula,
+              previousMember: item.isMemberBefore ? 'Oui' : 'Non'
+            }))
+            .sort((a, b) => {
+              if (a.status === 'PENDING' && b.status !== 'PENDING') return -1;
+              if (a.status !== 'PENDING' && b.status === 'PENDING') return 1;
+              
+              const dateA = new Date(a.dtCreate || '').getTime();
+              const dateB = new Date(b.dtCreate || '').getTime();
+              return dateB - dateA;
+            });
           
           this.dataSource.data = transformedData;
+          this.isLoading = false;
         },
         error: (error) => {
           console.error('Error loading applications:', error);
+          this.isLoading = false;
         }
       });
   }
@@ -157,10 +170,10 @@ export class ApplicationsComponent implements AfterViewInit {
           return false;
         });
 
-      const statusMatch = !filterObj.status || data.status === filterObj.status;
-      const genderMatch = !filterObj.gender || data.sex === filterObj.gender;
+      const statusMatch = !filterObj.status || 
+        this.getStatusDesc(data.status) === filterObj.status;
 
-      return searchMatch && statusMatch && genderMatch;
+      return searchMatch && statusMatch;
     };
   }
 

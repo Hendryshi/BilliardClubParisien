@@ -57,112 +57,66 @@ html, body {
   transform: translate(-50%, -50%) !important;
 }
 
-/* Snackbar 样式 */
+/* 成功提示样式 */
 .success-snackbar {
-  background: #2e7d32 !important;
+  background: linear-gradient(135deg, #3f51b5, #1a237e) !important;  /* 使用主题蓝色 */
   color: white !important;
   width: 90% !important;
   min-width: 280px !important;
   max-width: 800px !important;
-  padding: 20px !important;
+  padding: 20px 24px !important;
   margin: 0 !important;
   border-radius: 16px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(63, 81, 181, 0.25) !important;  /* 主题色阴影 */
   text-align: center !important;
-  box-sizing: border-box !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1.5 !important;
 }
 
+/* 错误提示样式 */
 .error-snackbar {
-  background: #d32f2f !important;
+  background: linear-gradient(135deg, #f44336, #d32f2f) !important;
   color: white !important;
   width: 90% !important;
   min-width: 280px !important;
   max-width: 800px !important;
-  padding: 20px !important;
+  padding: 20px 24px !important;
   margin: 0 !important;
   border-radius: 16px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(244, 67, 54, 0.25) !important;
   text-align: center !important;
-  box-sizing: border-box !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1.5 !important;
 }
 
-/* 移动端样式优化 */
-@media screen and (max-width: 599px) {
-  .success-snackbar,
-  .error-snackbar {
-    width: calc(100% - 32px) !important;
-    min-width: unset !important;
-    padding: 16px !important;
-    font-size: 14px !important;
-    border-radius: 12px !important;
+/* 动画效果 */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
   }
-
-  .success-snackbar .mat-simple-snackbar,
-  .error-snackbar .mat-simple-snackbar {
-    font-size: 14px !important;
-    line-height: 1.4 !important;
-  }
-
-  .mat-mdc-snack-bar-container {
-    margin: 0 !important;
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* 特小屏幕的额外优化 */
-@media screen and (max-width: 320px) {
-  .success-snackbar,
-  .error-snackbar {
-    width: calc(100% - 24px) !important;
-    padding: 12px !important;
-    font-size: 13px !important;
-  }
-}
-
-/* 添加到全局样式文件 */
-.success-snackbar {
-  background: #4caf50;
-  color: white;
-}
-
-.error-snackbar {
-  background: #f44336;
-  color: white;
-}
-
-.success-snackbar .mat-simple-snackbar-action,
-.error-snackbar .mat-simple-snackbar-action {
-  color: white;
+.mat-mdc-snack-bar-container {
+  animation: fadeInScale 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* 移动端适配 */
 @media screen and (max-width: 599px) {
-  html, body {
-    width: 100%;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-  }
-
-  .applications-container,
-  .detail-container,
-  .inscription-container {
-    width: 100% !important;
-    padding: 16px !important;
-    margin: 0 !important;
-  }
-
-  mat-card {
-    margin: 0 !important;
-    border-radius: 8px !important;
-  }
-}
-
-/* 特小屏幕的额外优化 */
-@media screen and (max-width: 320px) {
-  .applications-container,
-  .detail-container,
-  .inscription-container {
-    padding: 12px !important;
+  .success-snackbar,
+  .error-snackbar {
+    width: calc(100% - 32px) !important;
+    padding: 16px 20px !important;
+    font-size: 15px !important;
+    border-radius: 12px !important;
   }
 }
 

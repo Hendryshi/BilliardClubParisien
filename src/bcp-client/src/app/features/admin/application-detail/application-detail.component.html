@@ -1,4 +1,14 @@
 <div class="detail-container">
+  <div class="loading-overlay" *ngIf="isUpdating">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Mise à jour en cours...</span>
+  </div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Chargement en cours...</span>
+  </div>
+
   <div class="header-section">
     <h1 class="page-title">Détail de la Demande d'Inscription</h1>
   </div>
@@ -39,6 +49,25 @@
             <div class="detail-item">
               <span class="label">Sexe</span>
               <span class="value">{{application?.sex === 'M' ? 'Masculin' : 'Féminin'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">schedule</mat-icon>
+            <h3>Dates</h3>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">Date de création</span>
+              <span class="value">{{application?.dtCreate | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Dernière mise à jour</span>
+              <span class="value">{{application?.dtUpdate | date:'dd/MM/yyyy HH:mm'}}</span>
             </div>
           </div>
         </div>

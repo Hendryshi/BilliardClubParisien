@@ -14,6 +14,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { firstValueFrom } from 'rxjs';
 import { UpdateInscriptionRequest } from '../../../api/model/updateInscriptionRequest';
 import { ImagePreviewDialogComponent } from '../../../shared/components/image-preview-dialog/image-preview-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-application-detail',
@@ -27,8 +28,7 @@ import { ImagePreviewDialogComponent } from '../../../shared/components/image-pr
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
-    ConfirmDialogComponent,
-    ImagePreviewDialogComponent
+    MatProgressSpinnerModule
   ],
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.css']
@@ -37,6 +37,7 @@ export class ApplicationDetailComponent implements OnInit {
   application: InscriptionResponse | null = null;
   isLoading = true;
   error: string | null = null;
+  isUpdating = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -146,6 +147,8 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   async approveApplication() {
+    if (this.isUpdating) return;
+    
     if (!this.application?.id) {
       const errorConfig: MatSnackBarConfig = {
         duration: 3000,
@@ -174,6 +177,7 @@ export class ApplicationDetailComponent implements OnInit {
 
     const result = await firstValueFrom(dialogRef.afterClosed());
     if (result) {
+      this.isUpdating = true;
       try {
         const updateRequest: UpdateInscriptionRequest = {
           data: {
@@ -185,14 +189,34 @@ export class ApplicationDetailComponent implements OnInit {
           }
         };
 
-        await firstValueFrom(
-          this.inscriptionService.inscriptionPatch(
-            this.application.id,
-            updateRequest
-          )
-        );
-        
-        this.router.navigate(['/admin/applications']);
+        this.inscriptionService.inscriptionPatch(
+          this.application.id,
+          updateRequest
+        ).subscribe({
+          next: () => {
+            this.snackBar.open(
+              '✅ Demande approuvée - Un email de confirmation a été envoyé au candidat', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              }
+            );
+            this.router.navigate(['/admin/applications']);
+          },
+          error: (error: any) => {
+            console.error('Error approving application:', error);
+            this.snackBar.open(
+              'Une erreur est survenue lors de l\'approbation', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['error-snackbar']
+              }
+            );
+            this.isUpdating = false;
+          }
+        });
       } catch (error: any) {
         console.error('Error approving application:', error);
         
@@ -210,11 +234,14 @@ export class ApplicationDetailComponent implements OnInit {
           '',
           errorConfig
         );
+        this.isUpdating = false;
       }
     }
   }
 
   async rejectApplication() {
+    if (this.isUpdating) return;
+    
     if (!this.application?.id) {
       const errorConfig: MatSnackBarConfig = {
         duration: 3000,
@@ -243,6 +270,7 @@ export class ApplicationDetailComponent implements OnInit {
 
     const result = await firstValueFrom(dialogRef.afterClosed());
     if (result) {
+      this.isUpdating = true;
       try {
         const updateRequest: UpdateInscriptionRequest = {
           data: {
@@ -254,14 +282,34 @@ export class ApplicationDetailComponent implements OnInit {
           }
         };
 
-        await firstValueFrom(
-          this.inscriptionService.inscriptionPatch(
-            this.application.id,
-            updateRequest
-          )
-        );
-
-        this.router.navigate(['/admin/applications']);
+        this.inscriptionService.inscriptionPatch(
+          this.application.id,
+          updateRequest
+        ).subscribe({
+          next: () => {
+            this.snackBar.open(
+              '❌ Demande refusée - Un email de notification a été envoyé au candidat', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              }
+            );
+            this.router.navigate(['/admin/applications']);
+          },
+          error: (error: any) => {
+            console.error('Error rejecting application:', error);
+            this.snackBar.open(
+              'Une erreur est survenue lors du refus', 
+              '', 
+              {
+                duration: 3000,
+                panelClass: ['error-snackbar']
+              }
+            );
+            this.isUpdating = false;
+          }
+        });
       } catch (error: any) {
         console.error('Error rejecting application:', error);
         
@@ -279,6 +327,7 @@ export class ApplicationDetailComponent implements OnInit {
           '',
           errorConfig
         );
+        this.isUpdating = false;
       }
     }
   }

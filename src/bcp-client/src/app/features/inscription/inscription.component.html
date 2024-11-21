@@ -12,7 +12,7 @@
             <h3>Informations Personnelles</h3>
             <mat-form-field appearance="outline">
                 <mat-label>Nom</mat-label>
-                <input matInput formControlName="nom" placeholder="Votre nom">
+                <input matInput formControlName="nom" [readonly]="isSubmitting">
                 <mat-error *ngIf="inscriptionForm.get('nom')?.hasError('required')">
                 Le nom est obligatoire
                 </mat-error>
@@ -20,7 +20,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Prénom</mat-label>
-              <input matInput formControlName="prenom" placeholder="Votre prénom">
+              <input matInput formControlName="prenom" [readonly]="isSubmitting">
               <mat-error *ngIf="inscriptionForm.get('prenom')?.hasError('required')">
                 Le prénom est obligatoire
               </mat-error>
@@ -28,7 +28,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Sexe</mat-label>
-              <mat-select formControlName="sexe">
+              <mat-select formControlName="sexe" [disabled]="isSubmitting">
                 <mat-option *ngFor="let genre of genres" [value]="genre.value">
                   {{genre.viewValue}}
                 </mat-option>
@@ -40,7 +40,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Téléphone</mat-label>
-              <input matInput formControlName="telephone" placeholder="0612345678" type="tel">
+              <input matInput formControlName="telephone" [readonly]="isSubmitting">
               <mat-error *ngIf="inscriptionForm.get('telephone')?.hasError('required')">
                 Le numéro de téléphone est obligatoire
               </mat-error>
@@ -51,7 +51,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="email" placeholder="votre@email.com" type="email">
+                <input matInput formControlName="email" [readonly]="isSubmitting">
                 <mat-error *ngIf="inscriptionForm.get('email')?.hasError('required')">
                   L'email est obligatoire
                 </mat-error>
@@ -63,7 +63,7 @@
 
           <div class="form-section">
             <h3>Etiez-vous licencié(e) au Billard Club Parisien lors de la saison 2023-2024 ?</h3>
-            <mat-radio-group formControlName="previousMember" class="competition-group">
+            <mat-radio-group formControlName="previousMember" class="competition-group" [disabled]="isSubmitting">
               <mat-radio-button value="oui">Oui</mat-radio-button>
               <mat-radio-button value="non">Non</mat-radio-button>
             </mat-radio-group>
@@ -123,7 +123,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Formule d'abonnement</mat-label>
-              <mat-select formControlName="formule">
+              <mat-select formControlName="formule" [disabled]="isSubmitting">
                 <mat-option *ngFor="let formule of formules" [value]="formule.value">
                   {{formule.viewValue}}
                 </mat-option>
@@ -136,7 +136,7 @@
 
           <div class="form-section">
             <h3>Prendrez-vous part aux compétitions lors de la saison 2024-2025 ?</h3>
-            <mat-radio-group formControlName="competition" class="competition-group">
+            <mat-radio-group formControlName="competition" class="competition-group" [disabled]="isSubmitting">
               <mat-radio-button value="oui">Oui</mat-radio-button>
               <mat-radio-button value="non">Non</mat-radio-button>
             </mat-radio-group>
@@ -149,27 +149,27 @@
             <h3>Si oui, dans quelle(s) catégorie(s) ?</h3>
             <div class="categories-group" formGroupName="categories">
               <div class="category-item">
-                <mat-checkbox formControlName="junior">
+                <mat-checkbox formControlName="junior" [disabled]="isSubmitting">
                   Catégorie Junior (-23 ans et moins)
                 </mat-checkbox>
               </div>
               <div class="category-item">
-                <mat-checkbox formControlName="mixte">
+                <mat-checkbox formControlName="mixte" [disabled]="isSubmitting">
                   Catégorie Mixte
                 </mat-checkbox>
               </div>
               <div class="category-item">
-                <mat-checkbox formControlName="feminine">
+                <mat-checkbox formControlName="feminine" [disabled]="isSubmitting">
                   Catégorie Féminine
                 </mat-checkbox>
               </div>
               <div class="category-item">
-                <mat-checkbox formControlName="regional">
+                <mat-checkbox formControlName="regional" [disabled]="isSubmitting">
                   Niveau Régional
                 </mat-checkbox>
               </div>
               <div class="category-item">
-                <mat-checkbox formControlName="national">
+                <mat-checkbox formControlName="national" [disabled]="isSubmitting">
                   Niveau National
                 </mat-checkbox>
               </div>
@@ -193,6 +193,7 @@
                         formControlName="motivation"
                         rows="6"
                         [maxlength]="maxLength"
+                        [readonly]="isSubmitting"
                         placeholder="Décrivez vos motivations et objectifs..."></textarea>
               <mat-hint align="end">{{getRemainingChars()}} caractères restants</mat-hint>
               <mat-error *ngIf="inscriptionForm.get('motivation')?.hasError('maxlength')">
@@ -227,7 +228,7 @@
                         type="button"
                         class="upload-button" 
                         (click)="fileInput.click()" 
-                        *ngIf="!photo.preview">
+                        [disabled]="isSubmitting">
                   <mat-icon>add_photo_alternate</mat-icon>
                   Ajouter une photo
                 </button>
@@ -245,8 +246,14 @@
             <button mat-raised-button 
                     color="primary" 
                     type="submit" 
-                    [disabled]="!inscriptionForm.valid">
-              Soumettre la candidature
+                    [class.submitting]="isSubmitting"
+                    [disabled]="!inscriptionForm.valid || isSubmitting">
+              <mat-spinner *ngIf="isSubmitting" 
+                           diameter="24" 
+                           color="accent"
+                           class="spinner">
+              </mat-spinner>
+              <span>Envoyer la demande</span>
             </button>
           </div>
         </form>
