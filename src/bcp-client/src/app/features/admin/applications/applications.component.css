@@ -311,7 +311,8 @@ mat-paginator {
   }
 
   .mat-column-status {
-    min-width: 70px;
+    min-width: 90px;  /* 增加状态列的最小宽度 */
+    white-space: nowrap;  /* 防止文本换行 */
   }
 
   .mat-column-formule {
@@ -343,6 +344,9 @@ mat-paginator {
   .status-badge {
     padding: 4px 8px;
     font-size: 11px;
+    white-space: nowrap;  /* 确保状态文本不换行 */
+    display: inline-flex;
+    align-items: center;
     gap: 4px;
   }
 
