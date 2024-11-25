@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay, filter } from 'rxjs/operators';
 import { AuthService } from './core/services/auth.service';
 import { ViewportScroller } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,7 @@ export class AppComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private viewportScroller = inject(ViewportScroller);
+  private titleService = inject(Title);
   
   sidenavOpened = false;
   isAuthenticated$ = this.authService.isAuthenticated$;
@@ -45,6 +47,7 @@ export class AppComponent {
     );
 
   constructor() {
+    this.titleService.setTitle('BCParisien');
     // 监听路由变化
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
