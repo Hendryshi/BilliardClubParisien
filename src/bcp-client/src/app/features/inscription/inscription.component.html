@@ -214,24 +214,29 @@
             
             <div class="photo-upload-container">
               <div class="photo-upload" *ngFor="let photo of photos; let i = index">
-                <div class="photo-preview" *ngIf="photo.preview">
-                  <img [src]="photo.preview" alt="Preview">
-                  <button mat-icon-button 
+                <ng-container *ngIf="photo.preview; else uploadButton">
+                  <div class="photo-preview">
+                    <img [src]="photo.preview" alt="Preview">
+                    <button mat-icon-button 
+                            type="button"
+                            color="warn" 
+                            class="remove-photo" 
+                            (click)="removePhoto(i)"
+                            [disabled]="isSubmitting">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-template #uploadButton>
+                  <button mat-stroked-button 
                           type="button"
-                          color="warn" 
-                          class="remove-photo" 
-                          (click)="removePhoto(i)">
-                    <mat-icon>close</mat-icon>
+                          class="upload-button" 
+                          (click)="fileInput.click()"
+                          [disabled]="isSubmitting">
+                    <mat-icon>add_photo_alternate</mat-icon>
+                    Ajouter une photo
                   </button>
-                </div>
-                <button mat-stroked-button 
-                        type="button"
-                        class="upload-button" 
-                        (click)="fileInput.click()" 
-                        [disabled]="isSubmitting">
-                  <mat-icon>add_photo_alternate</mat-icon>
-                  Ajouter une photo
-                </button>
+                </ng-template>
                 <input type="file" 
                        #fileInput 
                        [accept]="'image/*'" 

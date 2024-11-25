@@ -1,9 +1,14 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="toolbar">
-    <button mat-icon-button (click)="sidenav.toggle(); toggleSidenav()" class="menu-button">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span class="logo" routerLink="/home" style="cursor: pointer">Billiard Club Parisien</span>
+    <div class="toolbar-left">
+      <button mat-icon-button (click)="sidenav.toggle(); toggleSidenav()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="logo-container" routerLink="/home">
+        <img src="/assets/icons/logo.svg" alt="BCParisien Logo" class="logo-icon">
+        <span class="logo-text">BCParisien</span>
+      </div>
+    </div>
     
     <div class="toolbar-right">
       <ng-container *ngIf="isAuthenticated$ | async; else loginButton">

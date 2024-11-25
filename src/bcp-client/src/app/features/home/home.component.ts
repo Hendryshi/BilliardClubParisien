@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
         <mat-card-content>
           <div class="welcome-section">
             <mat-icon class="welcome-icon">sports_bar</mat-icon>
-            <h2>Bienvenue au Club de Billard</h2>
+            <h2>Bienvenue au Billiard Club Parisien</h2>
             <p>Rejoignez notre club et profitez de nos installations de qualité.</p>
           </div>
 
