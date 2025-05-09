@@ -17,6 +17,7 @@ import { InscriptionService } from '../../api/api/inscription.service';
 import { InscriptionCommand } from '../../api/model/inscriptionCommand';
 import { InscriptionImageCommand } from '../../api/model/inscriptionImageCommand';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { environment } from '../../../environments/environment';
 
 interface Genre {
   value: string;
@@ -82,6 +83,7 @@ export class InscriptionComponent {
   isFormulesExpanded = false;
   isExpanded = false;
   isSubmitting = false;
+  currentSeason = environment.appConfig.season.current;
 
   genres: Genre[] = [
     { value: 'M', viewValue: 'Masculin' },
@@ -154,11 +156,10 @@ export class InscriptionComponent {
         .filter(([_, selected]) => selected)
         .map(([category]) => category.toUpperCase());
 
-      // 准备图片数据
       const images: InscriptionImageCommand[] = this.photos
-        .filter(photo => photo.preview) // 只处理有预览的照片
+        .filter(photo => photo.preview)
         .map(photo => ({
-          imageData: photo.preview?.split(',')[1] || null // 移除 data:image/xxx;base64, 前缀
+          imageData: photo.preview?.split(',')[1] || null
         }));
 
       const inscriptionCommand: InscriptionCommand = {
@@ -176,16 +177,8 @@ export class InscriptionComponent {
         inscriptionImages: images
       };
 
-      const successConfig: MatSnackBarConfig = {
+      const snackBarConfig: MatSnackBarConfig = {
         duration: 3000,
-        panelClass: ['success-snackbar'],
-        horizontalPosition: 'center',
-        verticalPosition: 'top'
-      };
-
-      const errorConfig: MatSnackBarConfig = {
-        duration: 3000,
-        panelClass: ['error-snackbar'],
         horizontalPosition: 'center',
         verticalPosition: 'top'
       };
@@ -193,29 +186,17 @@ export class InscriptionComponent {
       this.inscriptionService.inscriptionCreate({data: inscriptionCommand})
         .subscribe({
           next: () => {
+            this.snackBar.open('✅ Inscription réussie', '', snackBarConfig);
             this.inscriptionForm.reset();
             this.photos = [
               { file: undefined, preview: '' },
               { file: undefined, preview: '' }
             ];
-            this.router.navigate(['/home']).then(() => {
-              setTimeout(() => {
-                this.snackBar.open(
-                  '🎉 Félicitations! Votre inscription a été enregistrée avec succès!',
-                  '',
-                  successConfig
-                );
-              }, 100);
-            });
             this.isSubmitting = false;
           },
           error: (error) => {
             console.error('Inscription error:', error);
-            this.snackBar.open(
-              '❌ Une erreur est survenue lors de l\'inscription. Veuillez réessayer ou contacter le support si le problème persiste.',
-              '',
-              errorConfig
-            );
+            this.snackBar.open('❌ Échec de l\'inscription', '', snackBarConfig);
             this.isSubmitting = false;
           }
         });
