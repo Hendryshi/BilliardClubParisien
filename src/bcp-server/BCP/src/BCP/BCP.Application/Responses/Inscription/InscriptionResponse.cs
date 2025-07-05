@@ -1,0 +1,31 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace BCP.Application.Responses.Inscription
+{
+    public class InscriptionResponse
+    {
+		[Required]
+		public string Id { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Sex { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public bool IsMemberBefore { get; set; }
+		public string Formula { get; set; }
+		public bool JoinCompetition { get; set; }
+		public List<string> CompetitionCats { get; set; }
+		public string Motivation { get; set; }
+		public string Status { get; set; }
+		public List<InscriptionImageResponse> InscriptionImages { get; set; }
+	}
+
+	public class InscriptionImageResponse
+	{
+		[Required]
+		public string Id { get; set; }
+		[Required]
+		public string IdInscription { get; set; }
+		public string ImageData { get; set; }
+	}
+}

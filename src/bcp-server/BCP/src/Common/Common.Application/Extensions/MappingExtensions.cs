@@ -19,35 +19,49 @@ namespace Common.Application.Extensions
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="mapper"></param>
         /// <returns></returns>
-        public static IMappingExpression<TCommand, TEntity> OptionalValueRules<TCommand, TEntity>(this IMappingExpression<TCommand, TEntity> mapper)
-            where TCommand : class, new()
-            where TEntity : class, new()
+        public static IMappingExpression<TCommand, TEntity> OptionalValueRules<TCommand, TEntity>(
+                this IMappingExpression<TCommand, TEntity> mapper,
+                params string[] skipProperties)
+                where TCommand : class, new()
+                where TEntity : class, new()
         {
             mapper.IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             mapper.ForAllMembers(opt =>
             {
-                opt.PreCondition((src, context) => !src.GetType().GetProperty(opt.DestinationMember.Name).PropertyType.IsAssignableTo(typeof(IOptional)));
+                var propName = opt.DestinationMember.Name;
+                if(!skipProperties.Contains(propName))
+                {
+                    opt.PreCondition((src, context) =>
+                        !src.GetType().GetProperty(propName)?.PropertyType.IsAssignableTo(typeof(IOptional)) ?? true);
+                }
             });
 
             mapper.IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             mapper.AfterMap((src, dest, context) =>
             {
-                // treat all optional values. Apparently, the MapFrom causes all kinds of problems
-                foreach(var prop in src.GetType().GetProperties().Where(x => x.PropertyType.IsAssignableTo(typeof(IOptional))))
+                foreach(var prop in src.GetType().GetProperties()
+                             .Where(x => x.PropertyType.IsAssignableTo(typeof(IOptional)) && !skipProperties.Contains(x.Name)))
                 {
                     var destProp = dest.GetType().GetProperty(prop.Name);
-                    if(destProp == null || destProp.SetMethod == null || (destProp.SetMethod != null && !destProp.SetMethod.IsPublic)) continue;
+                    if(destProp == null || destProp.SetMethod == null || !destProp.SetMethod.IsPublic) continue;
+
                     var value = GetOptionalValue(prop.Name, src, dest, context);
-                    if(value != null && destProp.PropertyType.IsGenericList() && destProp.PropertyType.GenericTypeArguments[0].IsAssignableTo(typeof(BaseEntity)))
-                    { // if list of entities, the value must be treated for assignment. Cast problems otherwise.
+                    if(value != null &&
+                        destProp.PropertyType.IsGenericList() &&
+                        destProp.PropertyType.GenericTypeArguments[0].IsAssignableTo(typeof(BaseEntity)))
+                    {
                         var genType = destProp.PropertyType.GenericTypeArguments[0];
                         var targetType = typeof(List<>).MakeGenericType(genType);
-                        IList newList = (IList)Activator.CreateInstance(targetType); // new list of the right type
-
-                        foreach(var element in value as IList) newList.Add(element); // transfer the elements into the new list
+                        IList newList = (IList)Activator.CreateInstance(targetType);
+                        foreach(var element in value as IList) newList.Add(element);
                         destProp.SetValue(dest, newList);
                     }
-                    else destProp.SetValue(dest, value);
+                    else
+                    {
+                        destProp.SetValue(dest, value);
+                    }
                 }
             });
 

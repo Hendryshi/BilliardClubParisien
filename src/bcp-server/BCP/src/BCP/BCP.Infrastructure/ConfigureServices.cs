@@ -29,25 +29,15 @@ namespace BCP.Infrastructure
         {
             services.AddScoped<IAsyncRepository, BaseRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IInscriptionRepository, InscriptionRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                //sqlserver
-                //options.UseSqlServer(configuration.GetConnectionString("DefaultSQLConnection"), m =>
-                //{
-                //    m.MigrationsHistoryTable("__EFMigrationsHistory", "BCP");
-                //});
-
-                //mysql
                 var connectionString = configuration.GetConnectionString("DefaultSQLConnection");
-                options.UseMySql(
-                    connectionString,
-                    ServerVersion.AutoDetect(connectionString),
-                    mysqlOptions =>
-                    {
-                        mysqlOptions.MigrationsHistoryTable("__EFMigrationsHistory");
-                    }
-                );
+                options.UseNpgsql(connectionString, m =>
+                {
+                    m.MigrationsHistoryTable("__EFMigrationsHistory");
+                });
             });
 
             services.AddScoped<AppDbContext>();
