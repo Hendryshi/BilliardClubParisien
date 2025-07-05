@@ -1,0 +1,469 @@
+{
+  "x-generator": "NSwag v14.3.0.0 (NJsonSchema v11.2.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BCP.Api",
+    "version": "0.3.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8001"
+    }
+  ],
+  "paths": {
+    "/api/Inscription": {
+      "post": {
+        "tags": [
+          "Inscription"
+        ],
+        "operationId": "Inscription_Create",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInscriptionRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInscriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "User_Create",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateInscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InscriptionResponse"
+              }
+            ]
+          }
+        }
+      },
+      "InscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sex": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMemberBefore": {
+            "type": "boolean"
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinCompetition": {
+            "type": "boolean"
+          },
+          "competitionCats": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "motivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "inscriptionImages": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InscriptionImageResponse"
+            }
+          }
+        }
+      },
+      "InscriptionImageResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "idInscription"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idInscription": {
+            "type": "string",
+            "minLength": 1
+          },
+          "imageData": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateInscriptionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "nullable": false,
+            "$ref": "#/components/schemas/InscriptionCommand"
+          }
+        }
+      },
+      "InscriptionCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseAuditableEntityCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "firstName": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "lastName": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "sex": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "email": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "phone": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "isMemberBefore": {
+                "$ref": "#/components/schemas/OptionalOfBoolean"
+              },
+              "formula": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "joinCompetition": {
+                "$ref": "#/components/schemas/OptionalOfBoolean"
+              },
+              "competitionCats": {
+                "$ref": "#/components/schemas/OptionalOfListOfString"
+              },
+              "motivation": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "status": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              },
+              "inscriptionImages": {
+                "$ref": "#/components/schemas/OptionalOfListOfInscriptionImageCommand"
+              }
+            }
+          }
+        ]
+      },
+      "OptionalOfString": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasValue": {
+            "type": "boolean"
+          },
+          "hasNoValue": {
+            "type": "boolean"
+          },
+          "isNotNull": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "OptionalOfBoolean": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasValue": {
+            "type": "boolean"
+          },
+          "hasNoValue": {
+            "type": "boolean"
+          },
+          "isNotNull": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OptionalOfListOfString": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasValue": {
+            "type": "boolean"
+          },
+          "hasNoValue": {
+            "type": "boolean"
+          },
+          "isNotNull": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OptionalOfListOfInscriptionImageCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasValue": {
+            "type": "boolean"
+          },
+          "hasNoValue": {
+            "type": "boolean"
+          },
+          "isNotNull": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InscriptionImageCommand"
+            }
+          }
+        }
+      },
+      "InscriptionImageCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEntityCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "idInscription": {
+                "$ref": "#/components/schemas/OptionalOfNullableGuid"
+              },
+              "imageData": {
+                "$ref": "#/components/schemas/OptionalOfString"
+              }
+            }
+          }
+        ]
+      },
+      "OptionalOfNullableGuid": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hasValue": {
+            "type": "boolean"
+          },
+          "hasNoValue": {
+            "type": "boolean"
+          },
+          "isNotNull": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          }
+        }
+      },
+      "BaseEntityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BaseAuditableEntityCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEntityCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CreateUserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserResponse"
+              }
+            ]
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "userName",
+          "password"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "userName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "nullable": false,
+            "$ref": "#/components/schemas/UserCommand"
+          }
+        }
+      },
+      "UserCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userName",
+          "password"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Please keyin valid JWT token into the field",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
