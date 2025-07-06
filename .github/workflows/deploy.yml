@@ -34,7 +34,7 @@ jobs:
         dotnet-version: '8.0'
 
     - name: Build .NET API
-      working-directory: ./src/bcp-server/BCP.Api
+      working-directory: ./src/bcp-server/BCP/src/BCP/BCP.Api
       run: |
         dotnet build 
         dotnet publish -c Release -o publish
