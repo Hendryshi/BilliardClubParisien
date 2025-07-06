@@ -51,8 +51,9 @@ jobs:
     # 上传到群晖
     - name: Upload Angular and API build to NAS
       run: |
-        scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
-        scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
 
     # 远程启动 Docker 容器
     - name: SSH and restart Docker
