@@ -46,6 +46,7 @@ jobs:
         echo "${{ secrets.SYNOLOGYNAS }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -p ${{ secrets.NAS_PORT }} -H ${{ secrets.NAS_HOST }} >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
 
     # 上传到群晖
     - name: Upload Angular and API build to NAS
@@ -56,7 +57,7 @@ jobs:
     # 远程启动 Docker 容器
     - name: SSH and restart Docker
       run: |
-        ssh ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
         cd ${{ secrets.NAS_DIR }}
         docker compose down
         docker compose up -d --build
