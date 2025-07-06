@@ -52,7 +52,7 @@ jobs:
     - name: Upload Angular and API build to NAS
       run: |
         rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/browser/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/front/
-        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-server/BCP.Api/publish/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/api/
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-server/BCP/src/BCP/BCP.Api/publish/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/api/
         # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
         # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP/src/BCP/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
 
