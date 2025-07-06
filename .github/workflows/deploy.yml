@@ -15,29 +15,29 @@ jobs:
       uses: actions/checkout@v4
 
     # Node and Angular build
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+    #- name: Setup Node
+    #  uses: actions/setup-node@v4
+    #  with:
+     #   node-version: '18'
 
-    - name: Build Angular app
-      working-directory: ./src/bcp-client
-      run: |
-        npm install
-        npm install -g @angular/cli
-        ng build --output-path=dist
+   # - name: Build Angular app
+   #   working-directory: ./src/bcp-client
+   #   run: |
+   #     npm install
+   #     npm install -g @angular/cli
+   #     ng build --output-path=dist
 
     # .NET build
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0'
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v4
+    #  with:
+    #    dotnet-version: '8.0'
 
-    - name: Build .NET API
-      working-directory: ./src/bcp-server/BCP.Api
-      run: |
-        dotnet build 
-        dotnet publish -c Release -o publish
+   # - name: Build .NET API
+   #   working-directory: ./src/bcp-server/BCP.Api
+   #   run: |
+   #     dotnet build 
+   #     dotnet publish -c Release -o publish
 
     # 设置 SSH
     - name: Setup SSH key
