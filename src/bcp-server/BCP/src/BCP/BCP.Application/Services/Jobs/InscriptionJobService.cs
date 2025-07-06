@@ -91,7 +91,7 @@ namespace BCP.Application.Services
                   <title>Inscription BCP</title>
                 </head>
                 <body>
-                  <p>Bonjour,</p><p>Une nouvelle demande d'inscription a ®¶t®¶ soumise.</p><p><strong>Nom du candidat :</strong> {inscription.FirstName} {inscription.LastName}</p><p>Le formulaire est disponible en pi®®ce jointe (PDF).</p><br/><p>Bien cordialement,<br/>Syst®®me BCP</p>
+                  <p>Bonjour,</p><p>Une nouvelle demande d'inscription a √©t√© soumise.</p><p><strong>Nom du candidat :</strong> {inscription.FirstName} {inscription.LastName}</p><p>Le formulaire est disponible en pi√®ce jointe (PDF).</p><br/><p>Bien cordialement,<br/>Syst√®me BCP</p>
                 </body>
                 </html>";
 
