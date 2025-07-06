@@ -61,6 +61,6 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.NAS_PORT }} ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
         cd ${{ secrets.NAS_DIR }}
-        docker compose down
-        docker compose up -d --build
+        docker-compose down
+        docker-compose up -d --build
         EOF
