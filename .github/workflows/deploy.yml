@@ -27,17 +27,17 @@ jobs:
         npm install -g @angular/cli
         ng build --output-path=dist
 
-    # .NET build
-    #- name: Setup .NET
-    #  uses: actions/setup-dotnet@v4
-    #  with:
-    #    dotnet-version: '8.0'
+     # .NET build
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0'
 
-   # - name: Build .NET API
-   #   working-directory: ./src/bcp-server/BCP.Api
-   #   run: |
-   #     dotnet build 
-   #     dotnet publish -c Release -o publish
+    - name: Build .NET API
+      working-directory: ./src/bcp-server/BCP.Api
+      run: |
+        dotnet build 
+        dotnet publish -c Release -o publish
 
     # 设置 SSH
     - name: Setup SSH key
@@ -51,7 +51,8 @@ jobs:
     # 上传到群晖
     - name: Upload Angular and API build to NAS
       run: |
-        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/browser ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
         # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
         # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
 
