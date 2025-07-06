@@ -1,0 +1,74 @@
+name: Build angular and NET Deploy to Synology NAS
+
+on:
+  push:
+    branches: [ "deploy" ]
+  pull_request:
+    branches: [ "deploy" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Node and Angular build
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Build Angular app
+      working-directory: ./src/bcp-client
+      run: |
+        npm install
+        npm install -g @angular/cli
+        ng build --output-path=dist
+
+     # .NET build
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0'
+
+    - name: Build .NET API
+      working-directory: ./src/bcp-server/BCP/src/BCP/BCP.Api
+      run: |
+        dotnet build 
+        dotnet publish -c Release -o publish
+
+    # 设置 SSH
+    - name: Setup SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SYNOLOGYNAS }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -p ${{ secrets.NAS_PORT }} -H ${{ secrets.NAS_HOST }} >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+        
+    # Clean the target directory on NAS (remove all files)
+    - name: Clean target directory on NAS
+      run: |
+         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.NAS_PORT }} ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
+         rm -rf ${{ secrets.NAS_DIR }}/front/*
+         rm -rf ${{ secrets.NAS_DIR }}/api/*
+         EOF
+        
+    # 上传到群晖
+    - name: Upload Angular and API build to NAS
+      run: |
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/browser/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/front/
+        rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-server/BCP/src/BCP/BCP.Api/publish/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/api/
+        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP/src/BCP/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
+
+    # 远程启动 Docker 容器
+    - name: SSH and restart Docker
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.NAS_PORT }} root@${{ secrets.NAS_HOST }} << 'EOF'
+        cd ${{ secrets.NAS_DIR }}
+        docker-compose down
+        docker-compose up -d --build
+        EOF
