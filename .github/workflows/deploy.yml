@@ -2,9 +2,9 @@ name: Build angular and NET Deploy to Synology NAS
 
 on:
   push:
-    branches: [ "deploy" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "deploy" ]
+    branches: [ "develop" ]
 
 jobs:
   build-and-deploy:
