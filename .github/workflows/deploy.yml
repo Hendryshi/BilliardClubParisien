@@ -3,9 +3,7 @@ name: Build angular and NET Deploy to Synology NAS
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
-
+    
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -37,7 +35,7 @@ jobs:
       working-directory: ./src/bcp-server/BCP/src/BCP/BCP.Api
       run: |
         dotnet build 
-        dotnet publish -c Release -o publish
+        dotnet publish -c Release -o publish -p:InvariantGlobalization=false -p:GlobalizationMode=full
 
     # 设置 SSH
     - name: Setup SSH key
