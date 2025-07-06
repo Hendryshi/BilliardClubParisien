@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Mail;
 using Common.Application.Services.Logging;
 using System.Text;
+using System.Net.Mime;
 
 namespace BCP.Application.Services
 {
@@ -43,11 +44,13 @@ namespace BCP.Application.Services
                 {
                     From = new MailAddress(senderMail),
                     Subject = command.Object,
-                    Body = command.Body,
-                    IsBodyHtml = true,
                     BodyEncoding = Encoding.UTF8,
                     SubjectEncoding = Encoding.UTF8,
+                    IsBodyHtml = true
                 };
+
+                var view = AlternateView.CreateAlternateViewFromString(command.Body, Encoding.UTF8, MediaTypeNames.Text.Html);
+                mailMessage.AlternateViews.Add(view);
 
                 if(command.To.Count == 0)
                     command.To.Add(_options.DefaultReceiver);
