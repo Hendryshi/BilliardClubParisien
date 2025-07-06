@@ -54,7 +54,7 @@ jobs:
         rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-client/dist/browser/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/front/
         rsync -avz -e "ssh -p ${{ secrets.NAS_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./src/bcp-server/BCP.Api/publish/ ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/api/
         # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
-        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
+        # scp -P ${{ secrets.NAS_PORT }} -r ./src/bcp-server/BCP/src/BCP/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
 
     # 远程启动 Docker 容器
     - name: SSH and restart Docker
