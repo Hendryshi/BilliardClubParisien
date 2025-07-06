@@ -3,6 +3,7 @@ using BCP.Application.Interfaces;
 using Common.Application.Services.Helpers;
 using Common.Application.Services.Logging;
 using FluentResults;
+using Hangfire;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +13,14 @@ namespace BCP.Application.Commands.Inscription.Create
     {
         private readonly IMapper _mapper;
         private readonly IInscriptionRepository _repo;
+        private readonly IInscriptionJobService _jobService;
         private readonly ILogger<CreateInscriptionHandler> _logger;
 
-        public CreateInscriptionHandler(IMapper mapper, IInscriptionRepository repo, ILogger<CreateInscriptionHandler> logger)
+        public CreateInscriptionHandler(IMapper mapper, IInscriptionRepository repo, IInscriptionJobService jobService, ILogger<CreateInscriptionHandler> logger)
         {
             _mapper = mapper;
             _repo = repo;
+            _jobService = jobService;
             _logger = logger;
         }
 
@@ -51,6 +54,8 @@ namespace BCP.Application.Commands.Inscription.Create
                 {
                     Data = _mapper.Map<Responses.Inscription.InscriptionResponse>(entity)
                 };
+
+                BackgroundJob.Enqueue(() => _jobService.GeneratePdfAndSendEmailAsync(inscriptionObj.Id));
 
                 return Result.Ok(response);
             }

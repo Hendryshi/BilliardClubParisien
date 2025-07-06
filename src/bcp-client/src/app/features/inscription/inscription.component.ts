@@ -80,10 +80,9 @@ interface PhotoUpload {
 export class InscriptionComponent {
   inscriptionForm: FormGroup;
   maxLength = 1000;
-  isFormulesExpanded = false;
-  isExpanded = false;
+  isFormulesExpanded = true;
+  isExpanded = true;
   isSubmitting = false;
-  currentSeason = environment.appConfig.season.current;
 
   genres: Genre[] = [
     { value: 'M', viewValue: 'Masculin' },
@@ -193,6 +192,9 @@ export class InscriptionComponent {
               { file: undefined, preview: '' }
             ];
             this.isSubmitting = false;
+            
+            // 跳转到成功页面
+            this.router.navigate(['/inscription/success']);
           },
           error: (error) => {
             console.error('Inscription error:', error);
@@ -245,4 +247,6 @@ export class InscriptionComponent {
   removePhoto(index: number) {
     this.photos[index] = { file: undefined, preview: '' };
   }
+
+
 } 
