@@ -1,6 +1,11 @@
+using BCP.Application.Interfaces;
+using BCP.Application.Services;
+using BCP.Domain.Configuration;
 using Common.Application;
 using Common.Application.Behaviours;
 using FluentValidation;
+using Hangfire;
+using Hangfire.PostgreSql;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,8 +39,26 @@ namespace BCP.Application
             });
             services.AddValidatorsFromAssembly(typeof(ConfigureServices).Assembly);
 
+            services.AddScoped<IPdfReportService, PdfReportService>();
+            services.AddScoped<IInscriptionJobService, InscriptionJobService>();
+            services.AddMailService(configuration);
+
             return services;
         }
 
+        public static IServiceCollection AddHangfireServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHangfire(config => config.UsePostgreSqlStorage(c => c.UseNpgsqlConnection(configuration.GetConnectionString("DefaultSQLConnection"))));
+            services.AddHangfireServer();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMailService(this IServiceCollection services, IConfiguration config)
+        {
+            services.Configure<SMTPOptions>(config.GetSection("SMTP"));
+            services.AddScoped<IEmailService, EmailService>();
+            return services;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using BCP.Application.Commands.Inscription.Create;
+using BCP.Application.Commands.Inscription.GeneratePdf;
 using BCP.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,5 +23,18 @@ namespace BCP.Api.Controllers
             return MapToResult(response);
         }
 
+        [AllowAnonymous]
+        [HttpPost("GeneratePdf/{id}")]
+        [ProducesResponseType(typeof(ActionResult), 200)]
+        public async Task<ActionResult> GeneratePdf([FromRoute] string id, CancellationToken cancellationToken)
+        {
+            var request = new GenerateInscriptionPdfRequest() { Id = id };
+            var response = await SendAsync(request, cancellationToken);
+            if(response.IsSuccess && response.Value != null)
+            {
+                return response.Value;
+            }
+            return MapToResult(response);
+        }
     }
 }

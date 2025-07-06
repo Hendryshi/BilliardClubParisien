@@ -1,55 +1,14 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="toolbar">
     <div class="toolbar-left">
-      <button mat-icon-button (click)="sidenav.toggle(); toggleSidenav()" class="menu-button">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="logo-container" routerLink="/home">
+      <div class="logo-container" routerLink="/inscription">
         <img src="/assets/icons/logo.svg" alt="BCParisien Logo" class="logo-icon">
         <span class="logo-text">BCParisien</span>
       </div>
     </div>
-    
-    <div class="toolbar-right">
-      <ng-container *ngIf="isAuthenticated$ | async; else loginButton">
-        <button mat-button class="logout-button" (click)="logout()">
-          <mat-icon>perm_identity</mat-icon>
-          <span>Logout</span>
-        </button>
-      </ng-container>
-      <ng-template #loginButton>
-        <button mat-button class="login-button" routerLink="/admin/login">
-          <mat-icon>login</mat-icon>
-          <span>Login</span>
-        </button>
-      </ng-template>
-    </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav
-                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
-                 [opened]="!(isHandset$ | async) && sidenavOpened"
-                 [fixedInViewport]="true"
-                 fixedTopGap="64">
-      <mat-nav-list>
-        <a mat-list-item routerLink="/inscription" (click)="sidenav.close(); toggleSidenav()">
-          <mat-icon>how_to_reg</mat-icon>
-          <span class="nav-label">Demande Inscription</span>
-        </a>
-        <ng-container *ngIf="isAuthenticated$ | async">
-          <a mat-list-item routerLink="/admin/applications" (click)="sidenav.close(); toggleSidenav()">
-            <mat-icon>list</mat-icon>
-            <span class="nav-label">Gestion des Demandes</span>
-          </a>
-        </ng-container>
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content [class.sidenav-open]="sidenavOpened">
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
