@@ -47,7 +47,15 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -p ${{ secrets.NAS_PORT }} -H ${{ secrets.NAS_HOST }} >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
-
+        
+    # Clean the target directory on NAS (remove all files)
+    - name: Clean target directory on NAS
+      run: |
+         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.NAS_PORT }} ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
+         rm -rf ${{ secrets.NAS_DIR }}/front/*
+         rm -rf ${{ secrets.NAS_DIR }}/api/*
+         EOF
+        
     # 上传到群晖
     - name: Upload Angular and API build to NAS
       run: |
