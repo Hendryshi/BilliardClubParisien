@@ -43,21 +43,21 @@ jobs:
     - name: Setup SSH key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.NAS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.SYNOLOGYNAS }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.NAS_HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan -p ${{ secrets.NAS_PORT }} -H ${{ secrets.NAS_HOST }} >> ~/.ssh/known_hosts
 
     # 上传到群晖
     - name: Upload Angular and API build to NAS
       run: |
-        scp -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_TARGET_DIR }}/frontend
-        scp -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_TARGET_DIR }}/backend
+        scp -r ./src/bcp-client/dist ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/frontend
+        scp -r ./src/bcp-server/BCP.Api/publish ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }}:${{ secrets.NAS_DIR }}/backend
 
     # 远程启动 Docker 容器
     - name: SSH and restart Docker
       run: |
         ssh ${{ secrets.NAS_USER }}@${{ secrets.NAS_HOST }} << 'EOF'
-        cd ${{ secrets.NAS_TARGET_DIR }}
+        cd ${{ secrets.NAS_DIR }}
         docker compose down
         docker compose up -d --build
         EOF
