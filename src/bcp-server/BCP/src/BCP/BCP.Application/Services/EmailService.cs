@@ -53,7 +53,12 @@ namespace BCP.Application.Services
                 mailMessage.AlternateViews.Add(view);
 
                 if(command.To.Count == 0)
-                    command.To.Add(_options.DefaultReceiver);
+                {
+                    foreach (var email in _options.DefaultReceiver.Split(';', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        command.To.Add(email.Trim());
+                    }
+                }
 
                 foreach(var recipient in command.To)
                 {
