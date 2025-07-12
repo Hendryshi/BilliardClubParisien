@@ -41,12 +41,6 @@
             <mat-form-field appearance="outline">
               <mat-label>Téléphone</mat-label>
               <input matInput formControlName="telephone" [readonly]="isSubmitting">
-              <mat-error *ngIf="inscriptionForm.get('telephone')?.hasError('required')">
-                Le numéro de téléphone est obligatoire
-              </mat-error>
-              <mat-error *ngIf="inscriptionForm.get('telephone')?.hasError('pattern')">
-                Veuillez entrer un numéro de téléphone valide (10 chiffres)
-              </mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline">
@@ -209,7 +203,7 @@
               <div class="info-icon-container">
                 <mat-icon>info</mat-icon>
               </div>
-              <div class="info-text">Format accepté: JPG, PNG - Taille maximum: 5MB par photo</div>
+              <div class="info-text">Format accepté: JPG, PNG - Taille maximum: 10MB par photo</div>
             </div>
             
             <div class="photo-upload-container">
