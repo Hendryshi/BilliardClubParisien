@@ -117,7 +117,7 @@ export class InscriptionComponent {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       sexe: ['', Validators.required],
-      telephone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      telephone: [''],
       email: ['', [Validators.required, Validators.email]],
       previousMember: ['', Validators.required],
       formule: ['', Validators.required],
@@ -185,7 +185,6 @@ export class InscriptionComponent {
       this.inscriptionService.inscriptionCreate({data: inscriptionCommand})
         .subscribe({
           next: () => {
-            this.snackBar.open('✅ Inscription réussie', '', snackBarConfig);
             this.inscriptionForm.reset();
             this.photos = [
               { file: undefined, preview: '' },
@@ -215,8 +214,8 @@ export class InscriptionComponent {
       const file = input.files[0];
 
       // 检查文件大小（5MB限制）
-      if (file.size > 5 * 1024 * 1024) {
-        this.snackBar.open('La taille du fichier ne doit pas dépasser 5MB', '', {
+      if (file.size > 10 * 1024 * 1024) {
+        this.snackBar.open('La taille du fichier ne doit pas dépasser 10MB', '', {
           duration: 3000,
           panelClass: ['error-snackbar']
         });
