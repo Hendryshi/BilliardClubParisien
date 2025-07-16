@@ -95,6 +95,8 @@ namespace BCP.Application.Services
                 </body>
                 </html>";
 
+            emailCommand.CC = new List<string>() { inscription.Email };
+
             return emailCommand;
         }
 
